@@ -1,5 +1,6 @@
 ﻿@page "/"
 @rendermode InteractiveServer
+@using onboarding_1b1_andrei_kniazev.Components.UI
 
 <PageTitle>Home</PageTitle>
 
@@ -13,10 +14,12 @@
     </select>
     
     <p role="status">Current Env: @SelectedEnvironment</p>
-
-    
     <button class="btn btn-primary" @onclick="LogEnvironment">Click me</button>
+</div>
 
+<div>
+    <BalanceCard ConnectionName="Coinbase"/> 
+    <BalanceCard />
 </div>
 
 @code {
