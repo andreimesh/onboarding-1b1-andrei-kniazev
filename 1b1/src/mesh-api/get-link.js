@@ -8,26 +8,16 @@ export function getLink() {
     restrictMultipleAccounts: true,
     transferOptions: {
       toAddresses: [
-        {
-          networkId: "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
-          symbol: "ETH",
-          address: "0x00000000000000000000000"
-        },
-        {
-          networkId: "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
-          symbol: "USDC",
-          address: "0x00000000000000000000000"
-        },
-        {
-          networkId: "7436e9d0-ba42-4d2b-b4c0-8e4e606b2c12",
-          symbol: "MATIC",
-          address: "0x00000000000000000000000"
-        },
-        {
-          networkId: "7436e9d0-ba42-4d2b-b4c0-8e4e606b2c12",
-          symbol: "USDC",
-          address: "0x00000000000000000000000"
-        }
+        // {
+        //   networkId: "47624467-e52e-4938-a41a-7926b6c27acf",
+        //   symbol: "Coinbase",
+        //   address: "0x00000000000000000000000"
+        // },
+        // {
+        //   networkId: "8a60d227-2825-4158-b14b-3c8443a2b681",
+        //   symbol: "Rainbow",
+        //   address: "0x00000000000000000000000"
+        // },
       ],
       amountInFiat: 10,
       isInclusiveFeeEnabled: false,
@@ -35,6 +25,11 @@ export function getLink() {
     },
     disableApiKeyGeneration: false
   };
+  const bodyCoinbase = {
+    "userId": "12345",
+    "restrictMultipleAccounts": true,
+    "integrationId": "34aeb688-decb-485f-9d80-b66466783394" //metamask identifier
+  }
 
   const options = {
     method: 'POST',
@@ -43,7 +38,7 @@ export function getLink() {
       'X-Client-Id': secret().keyId,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify(bodyCoinbase)
   };
 
   fetch('https://integration-api.meshconnect.com/api/v1/linktoken', options)
