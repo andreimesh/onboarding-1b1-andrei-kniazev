@@ -5,19 +5,9 @@ import CoinbaseConnect from './components/CoinbaseConnect.vue';
 </script>
 
 <template>
-  <header>
 
-    <CoinbaseConnect />
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <CoinbaseConnect />
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
 </template>
 
 <style scoped>

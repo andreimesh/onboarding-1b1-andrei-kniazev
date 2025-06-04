@@ -1,6 +1,8 @@
 import { secret } from './secret';
 
-export function getLink() {
+
+
+export function getLink(integration) {
 
   const body = {
     userId: "UserId",
@@ -28,7 +30,7 @@ export function getLink() {
   const bodyCoinbase = {
     "userId": "12345",
     "restrictMultipleAccounts": true,
-    "integrationId": "34aeb688-decb-485f-9d80-b66466783394" //metamask identifier
+    "integrationId": "47624467-e52e-4938-a41a-7926b6c27acf" //metamask identifier
   }
 
   const options = {
