@@ -10,7 +10,7 @@ import { getLinkToken } from "../mesh-api/get-link-token"
 function connectSdk() {
   const meshLink =
     createLink({
-      clientId: secret().keyId,
+      clientId: secret().clientId,
       onIntegrationConnected: (payload) => { },
       onExit: (error) => { },
       onTransferFinished: (transferData) => { },
@@ -28,15 +28,14 @@ async function connect() {
     const token = await getLinkToken();
     const meshLink =
       createLink({
-        clientId: secret().keyId,
+        clientId: secret().clientId,
         onIntegrationConnected: (payload) => { },
         onExit: (error) => { },
         onTransferFinished: (transferData) => { },
         onEvent: (ev) => { },
-        accessTokens: [token],
+        accessTokens: [],
         transferDestinationTokens: []
       })
-    console.warn(token.content.linkToken);
     meshLink.openLink(token.content.linkToken)
   }
   catch (e) {

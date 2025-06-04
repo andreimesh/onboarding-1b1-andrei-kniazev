@@ -8,7 +8,7 @@ export async function getIntegrations() {
     method: 'GET',
     headers: {
       'X-Client-Secret': secret().keySecret,
-      'X-Client-Id': secret().keyId
+      'X-Client-Id': secret().clientId
     }
   };
   const response = await fetch('https://integration-api.meshconnect.com/api/v1/integrations', options)

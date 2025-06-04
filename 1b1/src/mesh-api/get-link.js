@@ -37,7 +37,7 @@ export function getLink(integration) {
     method: 'POST',
     headers: {
       'X-Client-Secret': secret().keySecret,
-      'X-Client-Id': secret().keyId,
+      'X-Client-Id': secret().clientId,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(bodyCoinbase)

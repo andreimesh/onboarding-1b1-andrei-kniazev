@@ -14,15 +14,13 @@ import { secret, baseUrl } from "./secret"
 export async function getLinkToken() {
   const bodyCoinbase = {
     "userId": "12345",
-    "restrictMultipleAccounts": true,
-    "integrationId": "47624467-e52e-4938-a41a-7926b6c27acf" //metamask identifier
   }
 
   const options = {
     method: 'POST',
     headers: {
       'X-Client-Secret': secret().keySecret,
-      'X-Client-Id': secret().keyId,
+      'X-Client-Id': secret().clientId,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(bodyCoinbase)
