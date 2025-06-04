@@ -1,7 +1,6 @@
 <script setup>
 import CoinbaseConnect from './components/CoinbaseConnect.vue';
 import LinkCard from './components/LinkCard.vue';
-import { useLinksState } from './state/link-state';
 </script>
 
 <template>
@@ -12,8 +11,8 @@ import { useLinksState } from './state/link-state';
     <button>Create Link</button>
   </div>
   <div class="grid">
-    <LinkCard />
-    <LinkCard />
+    <LinkCard :link-key="'linkA'" />
+    <LinkCard :link-key="'linkB'" />
   </div>
 
 </template>

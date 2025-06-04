@@ -1,11 +1,29 @@
 <script setup>
+import { defineProps } from 'vue'
+import { useLinksState } from '../state/link-state';
 
+const props = defineProps({
+  linkKey: {
+    type: String,
+    required: true,
+    validator: value => ['linkA', 'linkB'].includes(value)
+  }
+})
+
+
+const { isConnected } = useLinksState();
+const connectedStatusForThisLink = isConnected(props.linkKey);
 </script>
 
 <template>
   <div class="card">
-    <h1>Not connected</h1>
-    <button>Connect</button>
+    <div v-if="connectedStatusForThisLink">
+      Connected!
+    </div>
+    <div v-else>
+      <h1>Not connected</h1>
+      <button>Connect</button>
+    </div>
   </div>
 </template>
 
@@ -19,6 +37,7 @@
   flex-direction: column;
   align-items: center;
   transition: box-shadow 0.2s;
+  color: black;
 }
 
 .card:hover {

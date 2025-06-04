@@ -1,51 +1,64 @@
 import { ref, computed } from 'vue';
 
 /**
- * Each link can be either:
+ * The state contains two links, identified by keys (e.g., 'linkA' and 'linkB').
+ * Each link is either:
  * - null (not connected)
  * - { brokerType: string, balance: number } (connected)
  */
-const links = ref([]);
+const links = ref({
+  linkA: null,
+  linkB: null,
+});
 
 /**
- * Add a new link (connected).
+ * Connect a link by key.
+ * @param {'linkA'|'linkB'} key - The key of the link to connect.
  * @param {string} brokerType - The type of broker.
  * @param {number} balance - The account balance.
  */
-function addLink(brokerType, balance) {
-  links.value.push({
-    brokerType,
-    balance,
-  });
-}
-
-/**
- * Remove a link by index.
- * @param {number} index - Index of the link to remove.
- */
-function removeLink(index) {
-  if (index >= 0 && index < links.value.length) {
-    links.value.splice(index, 1);
+function connectLink(key, brokerType, balance) {
+  if (key in links.value) {
+    links.value[key] = {
+      brokerType,
+      balance,
+    };
   }
 }
 
 /**
- * Disconnect a link (set to null) by index.
- * @param {number} index - Index of the link to disconnect.
+ * Disconnect a link by key (set to null).
+ * @param {'linkA'|'linkB'} key - The key of the link to disconnect.
  */
-function disconnectLink(index) {
-  if (index >= 0 && index < links.value.length) {
-    links.value[index] = null;
+function disconnectLink(key) {
+  if (key in links.value) {
+    links.value[key] = null;
   }
 }
 
-const connectedLinks = computed(() => links.value.filter(link => link !== null));
+/**
+ * Whether a link is connected.
+ * @param {'linkA'|'linkB'} key
+ */
+function isConnected(key) {
+  return computed(() => links.value[key] !== null);
+}
+
+/**
+ * Get all connected links as an object.
+ */
+const connectedLinks = computed(() => {
+  return Object.fromEntries(
+    Object.entries(links.value).filter(([_, link]) => link !== null)
+  );
+});
 
 export function useLinksState() {
   return {
     links,
-    addLink,
-    removeLink,
+    connectLink,
     disconnectLink,
+    isConnected,
+    connectedLinks,
   };
 }
