@@ -4,8 +4,9 @@ import {
 } from "@meshconnect/web-link-sdk";
 import { getLink } from "../mesh-api/get-link"
 import { getIntegrations } from "../mesh-api/get-integrations";
-import { secret } from '../mesh-api/secret';
+import { secret, storeOnIntegrationsPayload } from '../mesh-api/secret';
 import { getLinkToken } from "../mesh-api/get-link-token"
+import { getBalance } from "../mesh-api/get-balance";
 
 function connectSdk() {
   const meshLink =
@@ -29,7 +30,7 @@ async function connect() {
     const meshLink =
       createLink({
         clientId: secret().clientId,
-        onIntegrationConnected: (payload) => { },
+        onIntegrationConnected: (payload) => { storeOnIntegrationsPayload(payload) },
         onExit: (error) => { },
         onTransferFinished: (transferData) => { },
         onEvent: (ev) => { },
@@ -57,13 +58,22 @@ async function integrations() {
     console.error(e)
   }
 }
-
+async function getBalanceForLink() {
+  try {
+    const balance = await getBalance();
+    console.log(balance);
+  }
+  catch (e) {
+    console.error(e)
+  }
+}
 </script>
 
 <template>
   <button @click="integrations()">Get Integrations</button>
   <button @click="connect()">Connect To Coinbase</button>
   <button @click="connectSdk()">Connect SDK</button>
+  <button @click="getBalanceForLink()">Get Balance for Link</button>
 </template>
 
 <style scoped></style>
