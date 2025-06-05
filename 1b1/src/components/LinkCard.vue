@@ -14,14 +14,9 @@ const props = defineProps({
   }
 })
 
-// Demo broker name: you may want to actually extract this from your payload or API
-const broker = computed(() => {
-  // Try to get name from payload if you have it available
-  const payload = tryGetStoredPayload(props.linkKey);
-  return (payload && payload.brokerName) ? payload.brokerName : (props.linkKey === 'linkA' ? 'Broker A' : 'Broker B');
-});
 
 const balance = ref(0);
+const brokerName = ref(props.linkKey);
 
 const { isConnected, connectLink } = useLinksState();
 
@@ -56,6 +51,10 @@ async function getBalanceForThisLinkCard() {
     const balanceObject = await getBalance(props.linkKey);
     console.log(balanceObject);
     balance.value = balanceObject.balances[0].cash;
+
+    // set broker name
+    const payload = tryGetStoredPayload(props.linkKey);
+    brokerName.value = payload.brokerName;
   }
   catch (e) {
     console.error(e)
@@ -78,7 +77,7 @@ function checkConnectionStatusOnLoad() {
   <div class="card">
     <div v-if="connectedStatusForThisLink" class="connected">
       <div class="broker-balance-box">
-        <div class="broker-name">{{ broker }}</div>
+        <div class="broker-name">{{ brokerName }}</div>
         <div class="balance-label">
           <span class="balance-value">${{ balance.toLocaleString(undefined, {
             minimumFractionDigits: 2,
@@ -92,7 +91,7 @@ function checkConnectionStatusOnLoad() {
       </div>
     </div>
     <div v-else class="not-connected">
-      <div class="broker-name">{{ broker }}</div>
+      <div class="broker-name">{{ brokerName }}</div>
       <div class="status failure">Not connected</div>
       <div>
         <button @click="connect">Connect</button>
