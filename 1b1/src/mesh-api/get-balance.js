@@ -18,11 +18,12 @@ import { secret, baseUrl, getStoredPayload } from "./secret"
 
 
 /**
+ * @param {'linkA'|'linkB'} key
  * @returns {Promise<BalancesResponse>} A promise that resolves to the balances response object.
  */
-export async function getBalance() {
-  const authToken = getStoredPayload().accountTokens[0].accessToken;
-  const brokerType = getStoredPayload().brokerType;
+export async function getBalance(key) {
+  const authToken = getStoredPayload(key).accountTokens[0].accessToken;
+  const brokerType = getStoredPayload(key).brokerType;
   const options = {
     method: 'POST',
     headers: {

@@ -1,8 +1,9 @@
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 import { useLinksState } from '../state/link-state';
 import { createLink } from '@meshconnect/web-link-sdk';
 import { getLinkToken } from '../mesh-api/get-link-token';
+import { getBalance } from '../mesh-api/get-balance';
 import { secret, storeOnIntegrationsPayload, getStoredPayload, tryGetStoredPayload } from '../mesh-api/secret';
 
 const props = defineProps({
@@ -12,6 +13,8 @@ const props = defineProps({
     validator: value => ['linkA', 'linkB'].includes(value)
   }
 })
+
+const balance = ref(0);
 
 const { isConnected, connectLink } = useLinksState();
 
@@ -38,12 +41,30 @@ async function connect() {
 function connectThisLinkCard() {
   console.log('Link connected for', props.linkKey);
   storeOnIntegrationsPayload(payload, props.linkKey);
-  connectLink(props.linkKey, meshLink);
+  connectLink(props.linkKey,);
+  getBalanceForThisLinkCard();
+}
+
+async function getBalanceForThisLinkCard() {
+  try {
+    const balanceObject = await getBalance(props.linkKey);
+    console.log(balanceObject);
+    balance.value = balanceObject.balances[0].cash;
+  }
+  catch (e) {
+    console.error(e)
+  }
 }
 
 function checkConnectionStatusOnLoad() {
   const payload = tryGetStoredPayload(props.linkKey);
-  connectLink(props.linkKey, payload);
+  if (payload) {
+    console.log(`Link Card is connected for ${props.linkKey}`);
+    connectLink(props.linkKey, payload);
+    getBalanceForThisLinkCard();
+  } else {
+    console.log(`Link Card is not connected for ${props.linkKey}`);
+  }
 }
 </script>
 
@@ -51,6 +72,8 @@ function checkConnectionStatusOnLoad() {
   <div class="card">
     <div v-if="connectedStatusForThisLink">
       Connected!
+      <h1>{{ broker }}</h1>
+      <h2>Balance: {{ balance }} USD</h2>
     </div>
     <div v-else>
       <h1>Not connected</h1>
