@@ -49,6 +49,7 @@ async function connectThisLinkCard(payload) {
 async function getBalanceForThisLinkCard() {
   try {
     const balanceObject = await getBalance(props.linkKey);
+
     balance.value = balanceObject.balances[0].cash;
 
     const storedPayload = getStoredPayload(props.linkKey);
