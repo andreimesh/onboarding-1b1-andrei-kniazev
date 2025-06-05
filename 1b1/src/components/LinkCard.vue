@@ -1,6 +1,9 @@
 <script setup>
 import { defineProps } from 'vue'
 import { useLinksState } from '../state/link-state';
+import { createLink } from '@meshconnect/web-link-sdk';
+import { getLinkToken } from '../mesh-api/get-link-token';
+import { secret, storeOnIntegrationsPayload, getStoredPayload, tryGetStoredPayload } from '../mesh-api/secret';
 
 const props = defineProps({
   linkKey: {
@@ -10,9 +13,38 @@ const props = defineProps({
   }
 })
 
+const { isConnected, connectLink } = useLinksState();
 
-const { isConnected } = useLinksState();
+checkConnectionStatusOnLoad();
+
+
 const connectedStatusForThisLink = isConnected(props.linkKey);
+
+async function connect() {
+  try {
+    const token = await getLinkToken();
+    const meshLink =
+      createLink({
+        clientId: secret().clientId,
+        onIntegrationConnected: (payload) => { connectThisLinkCard() },
+      })
+    meshLink.openLink(token.content.linkToken)
+  }
+  catch (e) {
+    console.error(e)
+  }
+}
+
+function connectThisLinkCard() {
+  console.log('Link connected for', props.linkKey);
+  storeOnIntegrationsPayload(payload, props.linkKey);
+  connectLink(props.linkKey, meshLink);
+}
+
+function checkConnectionStatusOnLoad() {
+  const payload = tryGetStoredPayload(props.linkKey);
+  connectLink(props.linkKey, payload);
+}
 </script>
 
 <template>
@@ -22,7 +54,7 @@ const connectedStatusForThisLink = isConnected(props.linkKey);
     </div>
     <div v-else>
       <h1>Not connected</h1>
-      <button>Connect</button>
+      <button @click="connect">Connect</button>
     </div>
   </div>
 </template>

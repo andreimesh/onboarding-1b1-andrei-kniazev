@@ -2,7 +2,6 @@
 import {
   createLink
 } from "@meshconnect/web-link-sdk";
-import { getLink } from "../mesh-api/get-link"
 import { getIntegrations } from "../mesh-api/get-integrations";
 import { secret, storeOnIntegrationsPayload } from '../mesh-api/secret';
 import { getLinkToken } from "../mesh-api/get-link-token"
@@ -30,7 +29,7 @@ async function connect() {
     const meshLink =
       createLink({
         clientId: secret().clientId,
-        onIntegrationConnected: (payload) => { storeOnIntegrationsPayload(payload) },
+        onIntegrationConnected: (payload) => { storeOnIntegrationsPayload(payload,) },
         onExit: (error) => { },
         onTransferFinished: (transferData) => { },
         onEvent: (ev) => { },
