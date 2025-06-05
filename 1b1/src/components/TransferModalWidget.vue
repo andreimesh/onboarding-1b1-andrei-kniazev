@@ -21,13 +21,21 @@ const isBothConnected = computed(() => {
           <button @click="showModal = false">Close</button>
         </div>
         <div v-else>
-          <h2>Transfer Money</h2>
           <div class="content">
+            <h2>Transfer Money</h2>
             <div>
-              <button>Transfer from {{ links.linkA.brokerType }}</button>
+              <button class="transfer-button">
+                Transfer 5$: {{ links.linkA.brokerType }} to {{ links.linkB.brokerType }}</button>
+            </div>
+            <div>
+              <button class="transfer-button">
+                Transfer 5$: {{ links.linkB.brokerType }} to {{ links.linkA.brokerType }}</button>
+            </div>
+            <div>
+              <button @click="showModal = false">Close</button>
             </div>
           </div>
-          <button @click="showModal = false">Close</button>
+
         </div>
 
       </div>
@@ -93,5 +101,32 @@ const isBothConnected = computed(() => {
 
 .error-message p {
   margin-bottom: 16px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.content .transfer-button {
+  padding: 12px 24px;
+  border: 1px solid #28a745;
+  border-color: #28a745;
+  color: black;
+  border-radius: 6px;
+  font-size: 1em;
+  background-color: white;
+
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(40, 167, 69, 0.08);
+}
+
+.content .transfer-button:hover {
+  background-color: #28a745;
+  color: white;
+  transform: translateY(-1px) scale(1.01);
 }
 </style>
