@@ -53,7 +53,7 @@ async function getBalanceForThisLinkCard() {
     balance.value = balanceObject.balances[0].cash;
 
     // set broker name
-    const payload = tryGetStoredPayload(props.linkKey);
+    const payload = tryGetStoredPayload(props.linkKey, payload.brokerNam);
     brokerName.value = payload.brokerName;
   }
   catch (e) {
@@ -65,12 +65,14 @@ function checkConnectionStatusOnLoad() {
   const payload = tryGetStoredPayload(props.linkKey);
   if (payload) {
     console.log(`Link Card is connected for ${props.linkKey}`);
-    connectLink(props.linkKey, payload);
+    connectLink(props.linkKey, payload.brokerName);
     getBalanceForThisLinkCard();
   } else {
     console.log(`Link Card is not connected for ${props.linkKey}`);
   }
 }
+
+
 </script>
 
 <template>
