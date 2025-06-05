@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from 'vue'
+import { defineProps, ref, computed } from 'vue'
 import { useLinksState } from '../state/link-state';
 import { createLink } from '@meshconnect/web-link-sdk';
 import { getLinkToken } from '../mesh-api/get-link-token';
@@ -14,12 +14,18 @@ const props = defineProps({
   }
 })
 
+// Demo broker name: you may want to actually extract this from your payload or API
+const broker = computed(() => {
+  // Try to get name from payload if you have it available
+  const payload = tryGetStoredPayload(props.linkKey);
+  return (payload && payload.brokerName) ? payload.brokerName : (props.linkKey === 'linkA' ? 'Broker A' : 'Broker B');
+});
+
 const balance = ref(0);
 
 const { isConnected, connectLink } = useLinksState();
 
 checkConnectionStatusOnLoad();
-
 
 const connectedStatusForThisLink = isConnected(props.linkKey);
 
@@ -29,7 +35,7 @@ async function connect() {
     const meshLink =
       createLink({
         clientId: secret().clientId,
-        onIntegrationConnected: (payload) => { connectThisLinkCard() },
+        onIntegrationConnected: (payload) => { connectThisLinkCard(payload) },
       })
     meshLink.openLink(token.content.linkToken)
   }
@@ -38,10 +44,10 @@ async function connect() {
   }
 }
 
-function connectThisLinkCard() {
+function connectThisLinkCard(payload) {
   console.log('Link connected for', props.linkKey);
   storeOnIntegrationsPayload(payload, props.linkKey);
-  connectLink(props.linkKey,);
+  connectLink(props.linkKey);
   getBalanceForThisLinkCard();
 }
 
@@ -70,14 +76,27 @@ function checkConnectionStatusOnLoad() {
 
 <template>
   <div class="card">
-    <div v-if="connectedStatusForThisLink">
-      Connected!
-      <h1>{{ broker }}</h1>
-      <h2>Balance: {{ balance }} USD</h2>
+    <div v-if="connectedStatusForThisLink" class="connected">
+      <div class="broker-balance-box">
+        <div class="broker-name">{{ broker }}</div>
+        <div class="balance-label">
+          <span class="balance-value">${{ balance.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }) }}</span>
+          <span class="currency">USD</span>
+        </div>
+      </div>
+      <div class="connected-content">
+        <div class="status success">Connected!</div>
+      </div>
     </div>
-    <div v-else>
-      <h1>Not connected</h1>
-      <button @click="connect">Connect</button>
+    <div v-else class="not-connected">
+      <div class="broker-name">{{ broker }}</div>
+      <div class="status failure">Not connected</div>
+      <div>
+        <button @click="connect">Connect</button>
+      </div>
     </div>
   </div>
 </template>
@@ -85,27 +104,88 @@ function checkConnectionStatusOnLoad() {
 <style scoped>
 .card {
   background: #fff;
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
   padding: 42px 24px 32px 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 320px;
+  max-width: 380px;
+  margin: 0 auto;
   transition: box-shadow 0.2s;
-  color: black;
+  color: #222;
 }
 
 .card:hover {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
 }
 
-.card h1 {
-  font-size: 1.4em;
-  color: #444;
-  margin: 0 0 24px 0;
+.broker-balance-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.broker-name {
+  font-size: 1.2em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #4078c0;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.balance-label {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  font-size: 2.1em;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.balance-value {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+
+.currency {
+  font-size: 0.45em;
+  font-weight: 600;
+  color: #888;
+  margin-left: 4px;
+  padding-bottom: 4px;
+}
+
+.connected-content {
+  text-align: center;
+}
+
+.status {
+  font-size: 1em;
+  margin-top: 8px;
+  font-weight: 500;
+  border-radius: 6px;
+  padding: 2px 12px;
+  display: inline-block;
+  text-align: center;
+}
+
+.status.success {
+  color: #217a50;
+  background: #e6faed;
+}
+
+.status.failure {
+  color: #a12a27;
+  background: #fceaea;
 }
 
 .card button {
+  margin-top: 18px;
   padding: 12px 36px;
   background: #4078c0;
   color: #fff;
