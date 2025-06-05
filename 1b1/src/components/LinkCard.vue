@@ -4,7 +4,8 @@ import { useLinksState } from '../state/link-state';
 import { createLink } from '@meshconnect/web-link-sdk';
 import { getLinkToken } from '../mesh-api/get-link-token';
 import { getBalance } from '../mesh-api/get-balance';
-import { secret, storeOnIntegrationsPayload, getStoredPayload, tryGetStoredPayload } from '../mesh-api/secret';
+import { secret } from '../mesh-api/secret';
+import { storeOnIntegrationsPayload, getStoredPayload, tryGetStoredPayload } from '../state/secret-store';
 
 const props = defineProps({
   linkKey: {
@@ -39,34 +40,32 @@ async function connect() {
   }
 }
 
-function connectThisLinkCard(payload) {
-  console.log('Link connected for', props.linkKey);
+async function connectThisLinkCard(payload) {
   storeOnIntegrationsPayload(payload, props.linkKey);
   connectLink(props.linkKey);
-  getBalanceForThisLinkCard();
+  await getBalanceForThisLinkCard();
 }
 
 async function getBalanceForThisLinkCard() {
   try {
     const balanceObject = await getBalance(props.linkKey);
-    console.log(balanceObject);
     balance.value = balanceObject.balances[0].cash;
 
+    const storedPayload = getStoredPayload(props.linkKey);
     // set broker name
-    const payload = tryGetStoredPayload(props.linkKey, payload.brokerNam);
-    brokerName.value = payload.brokerName;
+    // const payload = tryGetStoredPayload(props.linkKey, payload.brokerNam);
+    brokerName.value = storedPayload.brokerName;
   }
   catch (e) {
     console.error(e)
   }
 }
 
-function checkConnectionStatusOnLoad() {
+async function checkConnectionStatusOnLoad() {
   const payload = tryGetStoredPayload(props.linkKey);
   if (payload) {
-    console.log(`Link Card is connected for ${props.linkKey}`);
     connectLink(props.linkKey, payload.brokerName);
-    getBalanceForThisLinkCard();
+    await getBalanceForThisLinkCard();
   } else {
     console.log(`Link Card is not connected for ${props.linkKey}`);
   }

@@ -18,7 +18,6 @@ const links = ref({
  * @param {number} balance - The account balance.
  */
 function connectLink(key, brokerType, balance) {
-  console.warn(`Connecting link ${key} with brokerType: ${brokerType}, balance: ${balance}`);
   if (key in links.value) {
     links.value[key] = {
       brokerType,

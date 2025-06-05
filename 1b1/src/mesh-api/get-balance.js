@@ -1,5 +1,5 @@
-import { secret, baseUrl, getStoredPayload } from "./secret"
-
+import { secret, baseUrl } from "./secret"
+import { getStoredPayload } from '../state/secret-store'
 
 /**
  * @typedef {Object} Balance

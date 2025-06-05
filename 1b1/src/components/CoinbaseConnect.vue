@@ -3,7 +3,8 @@ import {
   createLink
 } from "@meshconnect/web-link-sdk";
 import { getIntegrations } from "../mesh-api/get-integrations";
-import { secret, storeOnIntegrationsPayload } from '../mesh-api/secret';
+import { secret } from '../mesh-api/secret';
+import { storeOnIntegrationsPayload } from '../state/secret-store';
 import { getLinkToken } from "../mesh-api/get-link-token"
 import { getBalance } from "../mesh-api/get-balance";
 
