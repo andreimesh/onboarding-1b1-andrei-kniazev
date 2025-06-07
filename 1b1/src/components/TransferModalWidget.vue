@@ -1,6 +1,7 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useLinksState } from '../state/link-state'
+import { getSupportedNetworks } from '../mesh-api/get-supported-networks'
 
 const showModal = ref(false)
 
@@ -9,6 +10,35 @@ const { isConnected, links } = useLinksState();
 const isBothConnected = computed(() => {
   return isConnected("linkA") && isConnected("linkB");
 });
+
+
+const networks = ref([]);
+
+getSupportedNetworks().then(fetchedNetworks => {
+  networks.value = fetchedNetworks.content.networks;
+});
+
+
+const networksThatSupportsLinkA = computed(() => {
+  if (!links.value.linkA || !links.value.linkB) return [];
+  return networks.value.filter(network => network.supportedBrokerTypes.includes(links.value.linkA.brokerType.toLowerCase()));
+});
+
+const networksThatSupportsLinkB = computed(() => {
+  if (!links.value.linkA || !links.value.linkB) return [];
+  return networks.value.filter(network => network.supportedBrokerTypes.includes(links.value.linkB.brokerType.toLowerCase()));
+});
+
+const baseNetworkA = computed(() => {
+  return networks.value.filter(n => n.name === "Base");
+});
+
+watch(baseNetworkA, (newValue) => {
+  console.log(networks.value)
+  console.log("Base Network A:", newValue);
+});
+
+
 </script>
 
 <template>
@@ -37,7 +67,6 @@ const isBothConnected = computed(() => {
           </div>
 
         </div>
-
       </div>
     </div>
   </div>
