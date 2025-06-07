@@ -31,9 +31,7 @@ const { isConnected, connectLink } = useLinksState();
 
 checkConnectionStatusOnLoad();
 
-const connectedStatusForThisLink = entity.isConnected;
 
-// = isConnected(props.linkKey);
 
 
 async function connect() {
@@ -89,7 +87,7 @@ async function checkConnectionStatusOnLoad() {
 
 <template>
   <div class="card">
-    <div v-if="connectedStatusForThisLink" class="connected">
+    <div v-if="entity.isConnected" class="connected">
       <div class="broker-balance-box">
         <div class="broker-name">{{ entity.displayName }}</div>
         <div class="balance-label">

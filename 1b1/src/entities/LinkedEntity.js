@@ -68,6 +68,9 @@ export class LinkedEntity {
     console.log(this);
   }
 
+  async updateBalance() {
+    guardAgainstNotConnected(this);
+  }
 
   /**
    * @param {number} index
@@ -82,5 +85,18 @@ export class LinkedEntity {
   async getToken() {
 
   }
-
 }
+
+
+
+/**
+ * Will throw if not connected.
+ * @param {LinkedEntity} entity
+ */
+function guardAgainstNotConnected(entity) {
+  if (!entity.isConnected.value) {
+    throw new Error("Entity is not connected. Please connect first.");
+  }
+}
+
+
