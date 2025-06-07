@@ -53,12 +53,13 @@ const connectedLinks = computed(() => {
   );
 });
 
+
 export function useLinksState() {
   return {
     links,
     connectLink,
     disconnectLink,
     isConnected,
-    connectedLinks,
+    connectedLinks
   };
 }

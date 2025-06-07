@@ -5,7 +5,7 @@ import { createLink } from '@meshconnect/web-link-sdk';
 import { getLinkToken } from '../mesh-api/get-link-token';
 import { getBalance } from '../mesh-api/get-balance';
 import { secret } from '../mesh-api/secret';
-import { storeOnIntegrationsPayload, getStoredPayload, tryGetStoredPayload } from '../state/secret-store';
+import { storeOnIntegrationsPayload, getStoredPayload, tryGetStoredPayload, getAuthToken } from '../state/secret-store';
 
 const props = defineProps({
   linkKey: {

@@ -1,0 +1,966 @@
+[
+  {
+    "networkType": "evm",
+    "tokens": [
+      {
+        "symbol": "AVAX",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/AVAX.svg"
+      },
+      {
+        "symbol": "DAI",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/DAI.svg"
+      },
+      {
+        "symbol": "USDT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDT.svg"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "okx",
+      "binanceInternational",
+      "btcTurkDirect",
+      "huobi",
+      "bybit",
+      "binanceUs",
+      "coinbase",
+      "krakenDirect",
+      "coinbasePrime",
+      "binanceConnect",
+      "paribuDirect",
+      "robinhood",
+      "binanceInternationalDirect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "AVAX",
+      "DAI",
+      "USDT",
+      "USDC"
+    ],
+    "nativeSymbol": "AVAX",
+    "id": "bad16371-c22a-4bf4-a311-274d046cd760",
+    "name": "AvalancheC",
+    "chainId": "43114",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/AvalancheC.svg"
+  },
+  {
+    "networkType": "cardano",
+    "tokens": [
+      {
+        "symbol": "ADA",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/ADA.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "okx",
+      "binanceInternational",
+      "btcTurkDirect",
+      "huobi",
+      "bitfinexDirect",
+      "revolutConnect",
+      "bybit",
+      "binanceUs",
+      "coinbase",
+      "krakenDirect",
+      "coinbasePrime",
+      "binanceConnect",
+      "binanceInternationalDirect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "ADA"
+    ],
+    "nativeSymbol": "ADA",
+    "id": "9cc3f8db-809a-4d06-a183-34a63a84aca8",
+    "name": "Cardano",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Cardano.svg"
+  },
+  {
+    "networkType": "stellar",
+    "tokens": [
+      {
+        "symbol": "XLM",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/XLM.svg"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "binanceInternational",
+      "binanceConnect",
+      "binanceInternationalDirect",
+      "btcTurkDirect",
+      "huobi",
+      "bitfinexDirect",
+      "revolutConnect",
+      "bybit",
+      "binanceUs",
+      "coinbase",
+      "krakenDirect",
+      "robinhood",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "XLM",
+      "USDC"
+    ],
+    "nativeSymbol": "XLM",
+    "id": "06855704-43d2-4ad2-a73c-372f0c3534e1",
+    "name": "Stellar",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Stellar.svg"
+  },
+  {
+    "networkType": "evm",
+    "tokens": [
+      {
+        "symbol": "ETH",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/ETH.svg"
+      },
+      {
+        "symbol": "WETH"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "binanceInternational",
+      "coinbase",
+      "binanceConnect",
+      "binanceInternationalDirect"
+    ],
+    "supportedTokens": [
+      "ETH",
+      "WETH",
+      "USDC"
+    ],
+    "nativeSymbol": "ETH",
+    "id": "aa883b03-120d-477c-a588-37c2afd3ca71",
+    "name": "Base",
+    "chainId": "8453",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Base.svg"
+  },
+  {
+    "networkType": "tvm",
+    "tokens": [
+      {
+        "symbol": "TON",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/TON.svg"
+      },
+      {
+        "symbol": "USDT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDT.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "binanceConnect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "TON",
+      "USDT"
+    ],
+    "nativeSymbol": "TON",
+    "id": "3d71a957-740b-4195-a437-389d171f21bb",
+    "name": "TON",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/TON.svg"
+  },
+  {
+    "networkType": "sui",
+    "tokens": [
+      {
+        "symbol": "SUI",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/SUI.svg"
+      },
+      {
+        "symbol": "USDT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDT.svg"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "okx",
+      "binanceInternational",
+      "huobi",
+      "bitfinexDirect",
+      "bybit",
+      "binanceUs",
+      "coinbase",
+      "binanceConnect",
+      "binanceInternationalDirect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "SUI",
+      "USDT",
+      "USDC"
+    ],
+    "nativeSymbol": "SUI",
+    "id": "0072c6e2-0e76-4265-9ac4-46bad109f599",
+    "name": "Sui",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Sui.svg"
+  },
+  {
+    "networkType": "evm",
+    "tokens": [
+      {
+        "symbol": "ETH",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/ETH.svg"
+      },
+      {
+        "symbol": "DAI",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/DAI.svg"
+      },
+      {
+        "symbol": "WETH"
+      },
+      {
+        "symbol": "ARB",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/ARB.svg"
+      },
+      {
+        "symbol": "USDT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDT.svg"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      },
+      {
+        "symbol": "PYUSD",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/PYUSD.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "coinbase",
+      "binanceInternational",
+      "btcTurkDirect",
+      "huobi",
+      "bitfinexDirect",
+      "binanceUs",
+      "krakenDirect",
+      "coinbasePrime",
+      "binanceConnect",
+      "binanceInternationalDirect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "ETH",
+      "DAI",
+      "WETH",
+      "ARB",
+      "USDT",
+      "USDC",
+      "PYUSD"
+    ],
+    "nativeSymbol": "ETH",
+    "id": "a34f2431-0ddd-4de4-bc22-4a8143287aeb",
+    "name": "Arbitrum",
+    "chainId": "42161",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Arbitrum.svg"
+  },
+  {
+    "networkType": "litecoin",
+    "tokens": [
+      {
+        "symbol": "LTC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/LTC.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "revolutConnect",
+      "binanceInternationalDirect"
+    ],
+    "supportedTokens": [
+      "LTC"
+    ],
+    "nativeSymbol": "LTC",
+    "id": "1709a5dc-d114-4683-bf95-5a5abb54df31",
+    "name": "Litecoin",
+    "chainId": "2",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Litecoin.svg"
+  },
+  {
+    "networkType": "ripple",
+    "tokens": [
+      {
+        "symbol": "XRP",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/XRP.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "btcTurkDirect",
+      "revolutConnect",
+      "coinbase",
+      "coinbasePrime",
+      "binanceConnect",
+      "robinhood",
+      "binanceInternationalDirect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "XRP"
+    ],
+    "nativeSymbol": "XRP",
+    "id": "0ea47ee7-9d36-460e-a2d5-64cfa8a1dddd",
+    "name": "Ripple",
+    "chainId": "144",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Ripple.svg"
+  },
+  {
+    "networkType": "dogecoin",
+    "tokens": [
+      {
+        "symbol": "DOGE",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/DOGE.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "okx",
+      "binanceInternational",
+      "btcTurkDirect",
+      "huobi",
+      "bitfinexDirect",
+      "revolutConnect",
+      "bybit",
+      "binanceUs",
+      "coinbase",
+      "krakenDirect",
+      "coinbasePrime",
+      "binanceConnect",
+      "robinhood",
+      "binanceInternationalDirect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "DOGE"
+    ],
+    "nativeSymbol": "DOGE",
+    "id": "34b66a94-f9f9-49ef-81e8-6ebd5a866f9d",
+    "name": "Dogecoin",
+    "chainId": "3",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/DogeChain.svg"
+  },
+  {
+    "networkType": "evm",
+    "tokens": [
+      {
+        "symbol": "POL",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/MATIC.svg"
+      },
+      {
+        "symbol": "MATIC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/MATIC.svg"
+      },
+      {
+        "symbol": "USDT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDT.svg"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      },
+      {
+        "symbol": "WMATIC"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "okx",
+      "binanceInternational",
+      "bitfinexDirect",
+      "bybit",
+      "krakenDirect",
+      "binanceConnect",
+      "binanceInternationalDirect",
+      "coinbase",
+      "robinhood",
+      "huobi",
+      "coinbasePrime"
+    ],
+    "supportedTokens": [
+      "POL",
+      "MATIC",
+      "USDT",
+      "USDC",
+      "WMATIC"
+    ],
+    "nativeSymbol": "POL",
+    "id": "7436e9d0-ba42-4d2b-b4c0-8e4e606b2c12",
+    "name": "Polygon",
+    "chainId": "137",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Polygon.svg"
+  },
+  {
+    "networkType": "tron",
+    "tokens": [
+      {
+        "symbol": "TRX",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/TRX.svg"
+      },
+      {
+        "symbol": "USDT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDT.svg"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "okx",
+      "binanceInternational",
+      "btcTurkDirect",
+      "huobi",
+      "bitfinexDirect",
+      "revolutConnect",
+      "binanceUs",
+      "krakenDirect",
+      "binanceConnect",
+      "paribuDirect",
+      "binanceInternationalDirect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "TRX",
+      "USDT",
+      "USDC"
+    ],
+    "nativeSymbol": "TRX",
+    "id": "c5dc5d2e-68c1-4261-9a30-90b598738bf5",
+    "name": "Tron",
+    "chainId": "111",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Tron.svg"
+  },
+  {
+    "networkType": "evm",
+    "tokens": [
+      {
+        "symbol": "ETH",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/ETH.svg"
+      },
+      {
+        "symbol": "SNX",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/SNX.svg"
+      },
+      {
+        "symbol": "OP",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/OP.svg"
+      },
+      {
+        "symbol": "DAI",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/DAI.svg"
+      },
+      {
+        "symbol": "WETH"
+      },
+      {
+        "symbol": "USDT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDT.svg"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "binanceInternational",
+      "binanceConnect",
+      "binanceInternationalDirect",
+      "bitfinexDirect",
+      "binanceUs",
+      "coinbase",
+      "krakenDirect",
+      "coinbasePrime",
+      "paribuDirect",
+      "paribuOAuth",
+      "revolutConnect"
+    ],
+    "supportedTokens": [
+      "ETH",
+      "SNX",
+      "OP",
+      "DAI",
+      "WETH",
+      "USDT",
+      "USDC"
+    ],
+    "nativeSymbol": "ETH",
+    "id": "18fa36b0-88a8-43ca-83db-9a874e0a2288",
+    "name": "Optimism",
+    "chainId": "10",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Optimism.svg"
+  },
+  {
+    "networkType": "bitcoin",
+    "tokens": [
+      {
+        "symbol": "BTC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/BTC.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "okx",
+      "binanceInternational",
+      "btcTurkDirect",
+      "huobi",
+      "bitfinexDirect",
+      "revolutConnect",
+      "bybit",
+      "binanceUs",
+      "coinbase",
+      "krakenDirect",
+      "coinbasePrime",
+      "binanceConnect",
+      "paxos",
+      "robinhood",
+      "binanceInternationalDirect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "BTC"
+    ],
+    "nativeSymbol": "BTC",
+    "id": "03dee5da-7398-428f-9ec2-ab41bcb271da",
+    "name": "Bitcoin",
+    "chainId": "0",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Bitcoin.svg"
+  },
+  {
+    "networkType": "avalancheX",
+    "tokens": [
+      {
+        "symbol": "AVAX",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/AVAX.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "okx",
+      "binanceInternational",
+      "btcTurkDirect",
+      "huobi",
+      "bitfinexDirect",
+      "revolutConnect",
+      "bybit",
+      "binanceConnect",
+      "paribuDirect",
+      "binanceInternationalDirect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "AVAX"
+    ],
+    "nativeSymbol": "AVAX",
+    "id": "915f07a3-8a02-40f0-8f9d-b773b81c60a6",
+    "name": "AvalancheX",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/AvalancheX.svg"
+  },
+  {
+    "networkType": "evm",
+    "tokens": [
+      {
+        "symbol": "ETH",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/ETH.svg"
+      },
+      {
+        "symbol": "LEO",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/LEO.svg"
+      },
+      {
+        "symbol": "TUSD",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/TUSD.svg"
+      },
+      {
+        "symbol": "GRT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/GRT.svg"
+      },
+      {
+        "symbol": "SHIB",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/SHIB.svg"
+      },
+      {
+        "symbol": "MATIC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/MATIC.svg"
+      },
+      {
+        "symbol": "QNT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/QNT.svg"
+      },
+      {
+        "symbol": "WBTC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/WBTC.svg"
+      },
+      {
+        "symbol": "AAVE",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/AAVE.svg"
+      },
+      {
+        "symbol": "UNI",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/UNI.svg"
+      },
+      {
+        "symbol": "SNX",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/SNX.svg"
+      },
+      {
+        "symbol": "CRO",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/CRO.svg"
+      },
+      {
+        "symbol": "RNDR",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/RNDR.svg"
+      },
+      {
+        "symbol": "FTM",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/FTM.svg"
+      },
+      {
+        "symbol": "SAND",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/SAND.svg"
+      },
+      {
+        "symbol": "APE",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/APE.svg"
+      },
+      {
+        "symbol": "IMX",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/IMX.svg"
+      },
+      {
+        "symbol": "INJ",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/INJ.svg"
+      },
+      {
+        "symbol": "PAXG",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/PAXG.svg"
+      },
+      {
+        "symbol": "BUSD"
+      },
+      {
+        "symbol": "LDO",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/LDO.svg"
+      },
+      {
+        "symbol": "DAI",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/DAI.svg"
+      },
+      {
+        "symbol": "MKR",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/MKR.svg"
+      },
+      {
+        "symbol": "USDP",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDP.svg"
+      },
+      {
+        "symbol": "WETH"
+      },
+      {
+        "symbol": "ARB",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/ARB.svg"
+      },
+      {
+        "symbol": "USDT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDT.svg"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      },
+      {
+        "symbol": "BLUR",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/BLUR.svg"
+      },
+      {
+        "symbol": "MNT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/MNT.svg"
+      },
+      {
+        "symbol": "LINK",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/LINK.svg"
+      },
+      {
+        "symbol": "PYUSD",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/PYUSD.svg"
+      },
+      {
+        "symbol": "MANA",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/MANA.svg"
+      },
+      {
+        "symbol": "USDD",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDD.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "okx",
+      "binanceInternational",
+      "huobi",
+      "binanceUs",
+      "binanceConnect",
+      "binanceInternationalDirect",
+      "btcTurkDirect",
+      "bitfinexDirect",
+      "revolutConnect",
+      "bybit",
+      "coinbase",
+      "krakenDirect",
+      "coinbasePrime",
+      "paribuOAuth",
+      "robinhood",
+      "paxos",
+      "paribuDirect",
+      "payPalConnect"
+    ],
+    "supportedTokens": [
+      "ETH",
+      "LEO",
+      "TUSD",
+      "GRT",
+      "SHIB",
+      "MATIC",
+      "QNT",
+      "WBTC",
+      "AAVE",
+      "UNI",
+      "SNX",
+      "CRO",
+      "RNDR",
+      "FTM",
+      "SAND",
+      "APE",
+      "IMX",
+      "INJ",
+      "PAXG",
+      "BUSD",
+      "LDO",
+      "DAI",
+      "MKR",
+      "USDP",
+      "WETH",
+      "ARB",
+      "USDT",
+      "USDC",
+      "BLUR",
+      "MNT",
+      "LINK",
+      "PYUSD",
+      "MANA",
+      "USDD"
+    ],
+    "nativeSymbol": "ETH",
+    "id": "e3c7fdd8-b1fc-4e51-85ae-bb276e075611",
+    "name": "Ethereum",
+    "chainId": "1",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Ethereum.svg"
+  },
+  {
+    "networkType": "aptos",
+    "tokens": [
+      {
+        "symbol": "APT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/APT.svg"
+      },
+      {
+        "symbol": "USDT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDT.svg"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "okx",
+      "binanceInternational",
+      "btcTurkDirect",
+      "huobi",
+      "bitfinexDirect",
+      "bybit",
+      "binanceUs",
+      "coinbase",
+      "krakenDirect",
+      "coinbasePrime",
+      "binanceConnect",
+      "binanceInternationalDirect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "APT",
+      "USDT",
+      "USDC"
+    ],
+    "nativeSymbol": "APT",
+    "id": "c6427cfd-8ddf-44f1-b400-bc4a5ee190a3",
+    "name": "Aptos",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Aptos.svg"
+  },
+  {
+    "networkType": "evm",
+    "tokens": [
+      {
+        "symbol": "S",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/S.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "binanceInternational",
+      "binanceInternationalDirect",
+      "paribuOAuth"
+    ],
+    "supportedTokens": [
+      "S"
+    ],
+    "nativeSymbol": "S",
+    "id": "385f0b3a-8471-4b8f-884f-c4f4496f1603",
+    "name": "Sonic",
+    "chainId": "146",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Sonic.svg"
+  },
+  {
+    "networkType": "evm",
+    "tokens": [
+      {
+        "symbol": "BNB",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/BNB.svg"
+      },
+      {
+        "symbol": "USDT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDT.svg"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      },
+      {
+        "symbol": "LTC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/LTC.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "binanceInternational",
+      "binanceUs",
+      "binanceConnect",
+      "binanceInternationalDirect"
+    ],
+    "supportedTokens": [
+      "BNB",
+      "USDT",
+      "USDC",
+      "LTC"
+    ],
+    "nativeSymbol": "BNB",
+    "id": "ed0ebeec-b166-4c8b-8574-cb078f7af8cf",
+    "name": "BSC",
+    "chainId": "56",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/BinanceSmartChain.svg"
+  },
+  {
+    "networkType": "evm",
+    "tokens": [
+      {
+        "symbol": "SEPOLIAETH",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/ETH.svg"
+      },
+      {
+        "symbol": "PYUSD",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/PYUSD.svg"
+      }
+    ],
+    "supportedBrokerTypes": [],
+    "supportedTokens": [
+      "SEPOLIAETH",
+      "PYUSD"
+    ],
+    "nativeSymbol": "SEPOLIAETH",
+    "id": "03b2d786-7092-4a6a-9737-d6013e21819b",
+    "name": "Sepolia",
+    "chainId": "11155111",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Ethereum.svg"
+  },
+  {
+    "networkType": "solana",
+    "tokens": [
+      {
+        "symbol": "SOL",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/SOL.svg"
+      },
+      {
+        "symbol": "USDT",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDT.svg"
+      },
+      {
+        "symbol": "USDC",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/USDC.svg"
+      },
+      {
+        "symbol": "PYUSD",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/PYUSD.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "okx",
+      "binanceInternational",
+      "btcTurkDirect",
+      "huobi",
+      "bitfinexDirect",
+      "revolutConnect",
+      "bybit",
+      "binanceUs",
+      "coinbase",
+      "krakenDirect",
+      "coinbasePrime",
+      "binanceConnect",
+      "paxos",
+      "binanceInternationalDirect",
+      "paribuOAuth",
+      "robinhood"
+    ],
+    "supportedTokens": [
+      "SOL",
+      "USDT",
+      "USDC",
+      "PYUSD"
+    ],
+    "nativeSymbol": "SOL",
+    "id": "0291810a-5947-424d-9a59-e88bb33e999d",
+    "name": "Solana",
+    "chainId": "101",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Solana.svg"
+  },
+  {
+    "networkType": "evm",
+    "tokens": [
+      {
+        "symbol": "ETH",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/ETH.svg"
+      },
+      {
+        "symbol": "BLAST",
+        "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/tokens/BLAST.svg"
+      }
+    ],
+    "supportedBrokerTypes": [
+      "coinbase"
+    ],
+    "supportedTokens": [
+      "ETH",
+      "BLAST"
+    ],
+    "nativeSymbol": "ETH",
+    "id": "0c17e03f-77fa-4644-b84c-eb247af8c4c1",
+    "name": "Blast",
+    "chainId": "81457",
+    "logoUrl": "https://frontuserfilecdn.azureedge.net/public/logos/networks/Blast.svg"
+  }
+]

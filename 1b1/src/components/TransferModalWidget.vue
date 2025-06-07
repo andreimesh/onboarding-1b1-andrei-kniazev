@@ -2,6 +2,9 @@
 import { ref, computed, watch } from 'vue'
 import { useLinksState } from '../state/link-state'
 import { getSupportedNetworks } from '../mesh-api/get-supported-networks'
+import { clearStoredPayloadForAll } from "../state/secret-store";
+import { configureTransfer } from '@/mesh-api/configure-transfer';
+import { getAuthToken, getBrokerType } from '../state/secret-store';
 
 const showModal = ref(false)
 
@@ -14,36 +17,38 @@ const isBothConnected = computed(() => {
 
 const networks = ref([]);
 
-getSupportedNetworks().then(fetchedNetworks => {
-  networks.value = fetchedNetworks.content.networks;
-});
+// Not needed anymore, but keeping for reference
+// getSupportedNetworks().then(fetchedNetworks => {
+//   networks.value = fetchedNetworks.content.networks;
+//   console.log(JSON.stringify(networks.value));
+// });
 
+/**
+ * @param {'linkA'|'linkB'} fromKey 
+ * @param {'linkA'|'linkB'} toKey
+ */
+async function transferMoney(fromKey, toKey) {
+  const to = {
+    brokerType: getBrokerType(toKey),
+    authToken: getAuthToken(toKey),
+  }
+  const from = {
+    brokerType: getBrokerType(fromKey),
+    authToken: getAuthToken(fromKey),
+  }
 
-const networksThatSupportsLinkA = computed(() => {
-  if (!links.value.linkA || !links.value.linkB) return [];
-  return networks.value.filter(network => network.supportedBrokerTypes.includes(links.value.linkA.brokerType.toLowerCase()));
-});
+  await configureTransfer(from, to);
+}
 
-const networksThatSupportsLinkB = computed(() => {
-  if (!links.value.linkA || !links.value.linkB) return [];
-  return networks.value.filter(network => network.supportedBrokerTypes.includes(links.value.linkB.brokerType.toLowerCase()));
-});
-
-const baseNetworkA = computed(() => {
-  return networks.value.filter(n => n.name === "Base");
-});
-
-watch(baseNetworkA, (newValue) => {
-  console.log(networks.value)
-  console.log("Base Network A:", newValue);
-});
-
-
+function resetAll() {
+  clearStoredPayloadForAll();
+}
 </script>
 
 <template>
   <div class="modal-actions">
     <button @click="showModal = true">Transfer Money</button>
+    <button @click="resetAll()">Reset All</button>
     <div v-if="showModal" class="modal-overlay" @click.self="showModal = false">
       <div class="modal-content">
         <div v-if="!isBothConnected" class="error-message">
@@ -54,11 +59,11 @@ watch(baseNetworkA, (newValue) => {
           <div class="content">
             <h2>Transfer Money</h2>
             <div>
-              <button class="transfer-button">
+              <button class="transfer-button" @click="transferMoney('linkA', 'linkB')">
                 Transfer 5$: {{ links.linkA.brokerType }} to {{ links.linkB.brokerType }}</button>
             </div>
             <div>
-              <button class="transfer-button">
+              <button class="transfer-button" @click="transferMoney('linkB', 'linkA')">
                 Transfer 5$: {{ links.linkB.brokerType }} to {{ links.linkA.brokerType }}</button>
             </div>
             <div>
@@ -91,7 +96,7 @@ watch(baseNetworkA, (newValue) => {
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
-  min-width: 300px;
+  min-width: 500px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -105,12 +110,12 @@ watch(baseNetworkA, (newValue) => {
 }
 
 .modal-actions button {
-  padding: 12px 34px;
+  padding: 6px 15px;
   background: #4078c0;
   color: #fff;
   border: none;
-  border-radius: 22px;
-  font-size: 1em;
+  border-radius: 5px;
+  font-size: 0.9em;
   font-weight: 500;
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(64, 120, 192, 0.08);
@@ -119,7 +124,7 @@ watch(baseNetworkA, (newValue) => {
 
 .modal-actions button:hover {
   background: #305d8a;
-  transform: translateY(-2px) scale(1.04);
+  transform: translateY(-2px) scale(1.02);
 }
 
 .error-message {

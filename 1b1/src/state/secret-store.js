@@ -60,6 +60,30 @@ export function getStoredPayload(key) {
   throw new Error("No stored payload found, please link first.");
 }
 
+/**
+ * @param {'linkA'|'linkB'} key - The key of the link to disconnect.
+ * @return {string} The stored access token.
+ */
+export function getAuthToken(key) {
+  if (key == null) throw new Error("Key must be provided to store payload.");
+  const storedPayload = sessionStorage.getItem(`meshAccessToken-${key}`);
+  if (storedPayload) {
+    const parsedPayload = JSON.parse(storedPayload);
+    return parsedPayload.accountTokens[0].accessToken;
+  }
+  throw new Error("No stored payload found, please link first.");
+}
+
+export function getBrokerType(key) {
+  if (key == null) throw new Error("Key must be provided to store payload.");
+  const storedPayload = sessionStorage.getItem(`meshAccessToken-${key}`);
+  if (storedPayload) {
+    const parsedPayload = JSON.parse(storedPayload);
+    return parsedPayload.brokerType;
+  }
+  throw new Error("No stored payload found, please link first.");
+}
+
 
 /**
  * @returns {AccessToken|null} Return null if no stored payload is found
@@ -72,4 +96,11 @@ export function tryGetStoredPayload(key) {
     return parsedPayload;
   }
   return null;
+}
+
+
+export function clearStoredPayloadForAll() {
+  sessionStorage.removeItem(`meshAccessToken-linkA`);
+  sessionStorage.removeItem(`meshAccessToken-linkB`);
+  storedPayload = null;
 }
