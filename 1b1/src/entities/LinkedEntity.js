@@ -61,8 +61,8 @@ export class LinkedEntity {
       refreshToken: payload.accessToken.accountTokens[0].refreshToken,
       accessToken: payload.accessToken.accountTokens[0].accessToken
     };
-    this.brokerName.value = payload.accessToken.brokerName;
-    this.brokerType.value = payload.accessToken.brokerType;
+    this.brokerName = ref(payload.accessToken.brokerName);
+    this.brokerType = ref(payload.accessToken.brokerType);
 
     console.log("LinkedEntity index:", this.index, "is connected");
     console.log(this);
