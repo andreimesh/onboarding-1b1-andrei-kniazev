@@ -11,7 +11,7 @@ import { secret, baseUrl } from "./secret"
 
 
 /**
- * Configures a transfer between two accounts.
+ * Configures a transfer between two accounts and will return networks that can be used for the transfer.
  * @param {TransferConfiguration} from 
  * @param {TransferConfiguration} to 
  */
@@ -37,4 +37,10 @@ export async function configureTransfer(from, to) {
   const response = await fetch(`${baseUrl()}/api/v1/transfers/managed/configure`, options);
   const responseJson = await response.json();
   console.warn(responseJson);
+  const eligibleForTransfer = responseJson.content.holdings.filter(h => h.eligibleForTransfer === true);
+  const allNetworks = eligibleForTransfer.map(h => h.networks).flat(1);
+  // const usdNetworks = eligibleForTransfer.filter(h => h.networkId === "USD");
+  console.warn("All networks:", allNetworks);
+  // console.warn("Eligible for transfer:", eligibleForTransfer);
+
 }

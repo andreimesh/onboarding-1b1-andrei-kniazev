@@ -29,5 +29,6 @@ export async function previewTransfer(from, to) {
   const response = await fetch(`${from.baseUrl}/api/v1/transfers/managed/preview`, options);
   const responseJson = await response.json();
   console.warn(responseJson);
+
   return responseJson;
 }

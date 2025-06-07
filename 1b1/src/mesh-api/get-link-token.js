@@ -12,7 +12,7 @@ import { secret, baseUrl } from "./secret"
  * @returns {LinkTokenResponse}
  */
 export async function getLinkToken() {
-  const bodyCoinbase = {
+  const body = {
     "userId": "12345",
   }
 
@@ -23,7 +23,7 @@ export async function getLinkToken() {
       'X-Client-Id': secret().clientId,
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(bodyCoinbase)
+    body: JSON.stringify(body)
   };
 
   const response = await fetch(`${baseUrl()}/api/v1/linktoken`, options)

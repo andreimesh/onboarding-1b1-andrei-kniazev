@@ -8,8 +8,8 @@ import TransferModalWidget from './components/TransferModalWidget.vue';
     <TransferModalWidget />
   </div>
   <div class="grid">
-    <LinkCard :link-key="'linkA'" />
-    <LinkCard :link-key="'linkB'" />
+    <LinkCard v-for="i in 2" :link-key="'linkA'" :index="i" />
+    <!-- <LinkCard :link-key="'linkB'" /> -->
   </div>
 
 </template>

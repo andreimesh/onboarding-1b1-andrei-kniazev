@@ -85,6 +85,21 @@ export function getBrokerType(key) {
 }
 
 
+export function storeRefreshToken(refreshToken, key) {
+  if (key == null) throw new Error("Key must be provided to store payload.");
+  // store the refresh token in session storage
+  sessionStorage.setItem(`meshRefreshToken-${key}`, refreshToken);
+}
+
+export function getRefreshToken(key) {
+  if (key == null) throw new Error("Key must be provided to store payload.");
+  const storedRefreshToken = sessionStorage.getItem(`meshRefreshToken-${key}`);
+  if (storedRefreshToken) {
+    return storedRefreshToken;
+  }
+  throw new Error("No stored refresh token found, please link first.");
+}
+
 /**
  * @returns {AccessToken|null} Return null if no stored payload is found
  */

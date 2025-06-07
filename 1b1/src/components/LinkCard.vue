@@ -12,6 +12,10 @@ const props = defineProps({
     type: String,
     required: true,
     validator: value => ['linkA', 'linkB'].includes(value)
+  },
+  index: {
+    type: Number,
+    required: true
   }
 })
 
