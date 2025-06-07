@@ -6,6 +6,8 @@ import { getLinkToken } from '../mesh-api/get-link-token';
 import { getBalance } from '../mesh-api/get-balance';
 import { secret } from '../mesh-api/secret';
 import { storeOnIntegrationsPayload, getStoredPayload, tryGetStoredPayload, getAuthToken } from '../state/secret-store';
+import { LinkedEntity } from '../entities/LinkedEntity';
+
 
 const props = defineProps({
   linkKey: {
@@ -20,6 +22,8 @@ const props = defineProps({
 })
 
 
+const entity = new LinkedEntity(props.index);
+
 const balance = ref(0);
 const brokerName = ref(props.linkKey);
 
@@ -27,22 +31,30 @@ const { isConnected, connectLink } = useLinksState();
 
 checkConnectionStatusOnLoad();
 
-const connectedStatusForThisLink = isConnected(props.linkKey);
+const connectedStatusForThisLink = entity.isConnected;
+
+// = isConnected(props.linkKey);
+
 
 async function connect() {
-  try {
-    const token = await getLinkToken();
-    const meshLink =
-      createLink({
-        clientId: secret().clientId,
-        onIntegrationConnected: (payload) => { connectThisLinkCard(payload) },
-      })
-    meshLink.openLink(token.content.linkToken)
-  }
-  catch (e) {
-    console.error(e)
-  }
+  await entity.connect();
+
 }
+
+// async function connect() {
+//   try {
+//     const token = await getLinkToken();
+//     const meshLink =
+//       createLink({
+//         clientId: secret().clientId,
+//         onIntegrationConnected: (payload) => { connectThisLinkCard(payload) },
+//       })
+//     meshLink.openLink(token.content.linkToken)
+//   }
+//   catch (e) {
+//     console.error(e)
+//   }
+// }
 
 async function connectThisLinkCard(payload) {
   storeOnIntegrationsPayload(payload, props.linkKey);
@@ -79,7 +91,7 @@ async function checkConnectionStatusOnLoad() {
   <div class="card">
     <div v-if="connectedStatusForThisLink" class="connected">
       <div class="broker-balance-box">
-        <div class="broker-name">{{ brokerName }}</div>
+        <div class="broker-name">{{ entity.displayName }}</div>
         <div class="balance-label">
           <span class="balance-value">${{ balance.toLocaleString(undefined, {
             minimumFractionDigits: 2,
@@ -93,7 +105,7 @@ async function checkConnectionStatusOnLoad() {
       </div>
     </div>
     <div v-else class="not-connected">
-      <div class="broker-name">{{ brokerName }}</div>
+      <div class="broker-name">{{ entity.displayName }}</div>
       <div class="status failure">Not connected</div>
       <div>
         <button @click="connect">Connect</button>

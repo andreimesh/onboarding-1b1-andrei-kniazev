@@ -1,6 +1,8 @@
-import { ref } from "vue"
+import { ref, computed } from "vue"
 import { getLinkToken } from '../mesh-api/get-link-token';
 import { createLink } from '@meshconnect/web-link-sdk';
+import { secret } from '../mesh-api/secret';
+
 
 /**
 * @type {Array<LinkedEntity>}
@@ -11,15 +13,16 @@ const linkedEntities = ref([]);
 export class LinkedEntity {
 
 
-  isConnected = false;
+
+  isConnected = ref(false);
 
   authToken = {
     refreshToken: null,
     accessToken: null
   }
 
-  brokerName = null;
-  brokerType = null;
+  brokerName = ref("");
+  brokerType = ref("");
 
 
   /**
@@ -31,6 +34,14 @@ export class LinkedEntity {
 
   get isConnected() {
     return this.isConnected;
+  }
+
+  get isRefreshNeeded() {
+    return this.authToken.refreshToken != null;
+  }
+
+  get displayName() {
+    return computed(() => this.index + "# " + this.brokerName.value);
   }
 
   async connect() {
@@ -45,14 +56,15 @@ export class LinkedEntity {
   }
 
   connectThisLink(payload) {
-    this.isConnected = true;
+    this.isConnected.value = true;
     this.authToken = {
-      refreshToken: payload.accessToken.refreshToken,
-      accessToken: payload.accessToken.accessToken
+      refreshToken: payload.accessToken.accountTokens[0].refreshToken,
+      accessToken: payload.accessToken.accountTokens[0].accessToken
     };
-    this.brokerName = payload.brokerName;
-    this.brokerType = payload.brokerType;
+    this.brokerName.value = payload.accessToken.brokerName;
+    this.brokerType.value = payload.accessToken.brokerType;
 
+    console.log("LinkedEntity index:", this.index, "is connected");
     console.log(this);
   }
 
