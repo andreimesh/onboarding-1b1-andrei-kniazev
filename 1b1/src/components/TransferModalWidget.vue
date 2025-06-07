@@ -40,15 +40,12 @@ async function transferMoney(fromKey, toKey) {
   await configureTransfer(from, to);
 }
 
-function resetAll() {
-  clearStoredPayloadForAll();
-}
 </script>
 
 <template>
   <div class="modal-actions">
     <button @click="showModal = true">Transfer Money</button>
-    <button @click="resetAll()">Reset All</button>
+
     <div v-if="showModal" class="modal-overlay" @click.self="showModal = false">
       <div class="modal-content">
         <div v-if="!isBothConnected" class="error-message">

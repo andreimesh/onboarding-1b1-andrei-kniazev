@@ -1,15 +1,30 @@
 <script setup>
+import { ref } from 'vue';
 import LinkCard from './components/LinkCard.vue';
 import TransferModalWidget from './components/TransferModalWidget.vue';
+import { LinkedEntity, linkedEntities } from './entities/LinkedEntity';
+
+reset();
+
+
+function reset() {
+  linkedEntities.values = [];
+  for (let i = 0; i < 2; i++) {
+    LinkedEntity.createLink(i);
+  }
+}
+
 </script>
 
 <template>
+  <div>
+    <button class="reset-btn" @click="reset">Reset</button>
+  </div>
   <div class="top-menu">
     <TransferModalWidget />
   </div>
   <div class="grid">
-    <LinkCard v-for="i in 2" :link-key="'linkA'" :index="i" />
-    <!-- <LinkCard :link-key="'linkB'" /> -->
+    <LinkCard v-for="entity in linkedEntities" :link-key="'linkA'" :index="entity.index" :entity="entity" />
   </div>
 
 </template>
@@ -23,6 +38,18 @@ import TransferModalWidget from './components/TransferModalWidget.vue';
   font-size: 1.5em;
   width: 100%;
   height: 100px;
+}
+
+.reset-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .grid {

@@ -2,18 +2,16 @@ import { ref, computed } from "vue"
 import { getLinkToken } from '../mesh-api/get-link-token';
 import { createLink } from '@meshconnect/web-link-sdk';
 import { secret } from '../mesh-api/secret';
-
+import { postBalanceGet } from '../mesh-api/balance/post-balance-get';
+import { postRefreshToken } from '../mesh-api/auth/post-refresh-token';
 
 /**
 * @type {Array<LinkedEntity>}
 */
-const linkedEntities = ref([]);
+export const linkedEntities = ref([]);
 
 
 export class LinkedEntity {
-
-
-
   isConnected = ref(false);
 
   authToken = {
@@ -32,8 +30,9 @@ export class LinkedEntity {
     this.index = index;
   }
 
-  get isConnected() {
-    return this.isConnected;
+  static createLink(index) {
+    const link = new LinkedEntity(index);
+    linkedEntities.value.push(link);
   }
 
   get isRefreshNeeded() {
@@ -41,7 +40,8 @@ export class LinkedEntity {
   }
 
   get displayName() {
-    return computed(() => this.index + "# " + this.brokerName.value);
+    const brokerName = this.brokerName.value ?? "";
+    return computed(() => this.index + "# " + brokerName);
   }
 
   async connect() {
@@ -56,7 +56,7 @@ export class LinkedEntity {
   }
 
   connectThisLink(payload) {
-    this.isConnected.value = true;
+    this.isConnected = ref(true);
     this.authToken = {
       refreshToken: payload.accessToken.accountTokens[0].refreshToken,
       accessToken: payload.accessToken.accountTokens[0].accessToken
@@ -68,8 +68,18 @@ export class LinkedEntity {
     console.log(this);
   }
 
+  async getRefreshedToken() {
+    console.log("LinkedEntity.getRefreshedToken() called for index:", this.index);
+    guardAgainstNotConnected(this);
+    const refreshedToken = postRefreshToken(this.authToken.refreshToken, this.brokerType.value);
+    console.warn(refreshedToken);
+    console.log("Token was refreshed");
+  }
+
   async updateBalance() {
     guardAgainstNotConnected(this);
+    await this.getRefreshedToken();
+    // await postBalanceGet(thi)
   }
 
   /**
