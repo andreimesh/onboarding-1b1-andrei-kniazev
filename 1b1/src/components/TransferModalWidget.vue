@@ -62,24 +62,24 @@ function showModalTrue() {
 
 <template>
   <div class="modal-actions">
-    <button @click="showModalTrue()">Transfer Money</button>
+    <button @click="showModalTrue()">Transfer</button>
 
     <div v-if="showModal" class="modal-overlay" @click.self="showModal = false">
       <div class="modal-content">
         <div v-if="!isBothConnected" class="error-message">
-          <p>Error! Please connect both links to transfer money.</p>
+          <p>Error! Please connect both links to transfer.</p>
           <button @click="showModal = false">Close</button>
         </div>
         <div v-else>
           <div class="content">
-            <h2>Transfer Money</h2>
+            <h2>Transfer</h2>
             <div>
               <button class="transfer-button" @click="transferMoney(entities[0], entities[1])">
-                Transfer 5$: {{ entities[0].brokerName }} to {{ entities[1].brokerName }}</button>
+                Transfer 5 USDC: {{ entities[0].brokerName }} to {{ entities[1].brokerName }}</button>
             </div>
             <div>
               <button class="transfer-button" @click="transferMoney(entities[1], entities[0])">
-                Transfer 5$: {{ entities[1].brokerName }} to {{ entities[0].brokerName }}</button>
+                Transfer 5 USDC: {{ entities[1].brokerName }} to {{ entities[0].brokerName }}</button>
             </div>
             <div>
               <button @click="showModal = false">Close</button>
