@@ -3,6 +3,7 @@ import { createLink } from '@meshconnect/web-link-sdk';
 import { secret } from '../mesh-api/secret';
 import { postBalanceGet } from '../mesh-api/balance/post-balance-get';
 import { postRefreshToken } from '../mesh-api/auth/post-refresh-token';
+import { ref } from 'vue';
 
 /**
 * @type {Array<LinkedEntity>}
@@ -65,17 +66,27 @@ export class LinkedEntity {
   async getRefreshedToken() {
     console.log("LinkedEntity.getRefreshedToken() called for:", this);
     guardAgainstNotConnected(this);
+    if (this.authToken.refreshToken == null) {
+      console.log("No refresh token available for index:", this.index);
+      console.log("Skipping token refresh.");
+      return;
+    }
     const refreshedToken = await postRefreshToken(
       this.authToken.refreshToken,
       this.brokerType);
-    console.warn(refreshedToken);
+
+    this.authToken = {
+      refreshToken: refreshedToken.brokerAccountTokens[0].refreshToken,
+      accessToken: refreshedToken.brokerAccountTokens[0].accessToken
+    };
     console.log("Token was refreshed");
   }
 
   async updateBalance() {
     guardAgainstNotConnected(this);
     await this.getRefreshedToken();
-    // await postBalanceGet(thi)
+    const balance = await postBalanceGet(this.authToken.accessToken, this.brokerType)
+    console.log("Balance updated for index:", this.index, "Balance:", balance);
   }
 
   /**
