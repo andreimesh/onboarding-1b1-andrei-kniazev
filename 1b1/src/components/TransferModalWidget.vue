@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { useLinksState } from '../state/link-state'
 import { getSupportedNetworks } from '../mesh-api/get-supported-networks'
 import { clearStoredPayloadForAll } from "../state/secret-store";
@@ -7,6 +7,7 @@ import { configureTransfer } from '@/mesh-api/transfer/configure-transfer';
 import { getAuthToken, getBrokerType } from '../state/secret-store';
 import { linkedEntities, LinkedEntity } from '../entities/LinkedEntity';
 import { TransferEntity } from '../entities/TransferEntity';
+import PreviewTransfer from "./PreviewTransfer.vue";
 
 const props = defineProps({
   entities: {
@@ -35,7 +36,8 @@ const networks = ref([]);
 /**
  * @type {TransferEntity|null}
  */
-let transferEntity = null;
+let transferEntity = null
+let previewResult = ref(null);
 
 /**
  * @param {LinkedEntity} fromEntity
@@ -45,6 +47,7 @@ async function transferMoney(fromEntity, toEntity) {
   transferEntity = new TransferEntity(fromEntity, toEntity);
   await transferEntity.configure();
   await transferEntity.preview();
+  previewResult = ref(transferEntity.previewResult);
 }
 
 function showModalTrue() {
@@ -72,8 +75,9 @@ function showModalTrue() {
             <div>
               <button class="transfer-button" @click="transferMoney(entities[0], entities[1])">
                 Transfer 5 USDC: {{ entities[0].brokerName }} to {{ entities[1].brokerName }}</button>
-
             </div>
+            <PreviewTransfer v-if="previewResult" :preview="previewResult" />
+
             <div>
               <button class="transfer-button" @click="transferMoney(entities[1], entities[0])">
                 <!-- https://docs.meshconnect.com/guides/link-initialization#transferring-for-a-specific-amount -->

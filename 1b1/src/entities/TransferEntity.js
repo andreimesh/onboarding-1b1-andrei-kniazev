@@ -2,6 +2,7 @@ import { configureTransfer } from "../mesh-api/transfer/configure-transfer";
 import { postPreview } from "../mesh-api/transfer/post-preview";
 import { LinkedEntity } from "./LinkedEntity";
 import { NetworkModel } from '../models/NetworkModel';
+import { PreviewTransferResult } from "@/models/PreviewTransferResult";
 
 export class TransferEntity {
 
@@ -9,6 +10,11 @@ export class TransferEntity {
    * @type {NetworkModel|null}
    */
   networkToTransfer = null;
+
+  /**
+   * @type {PreviewTransferResult | null}
+   */
+  previewResult = null;
 
   symbol = "USDC"
 
@@ -47,7 +53,7 @@ export class TransferEntity {
 
   async preview() {
     console.log("Preview transfer from", this.fromEntity, "to", this.toEntity);
-    this.previewResult = await postPreview(
+    const previewResultResponse = await postPreview(
       {
         fromAuthToken: this.fromEntity.authToken.accessToken,
         fromType: this.fromEntity.brokerType,
@@ -60,6 +66,7 @@ export class TransferEntity {
       }
     )
 
-    console.log("Preview", this.previewResult);
+    this.previewResult = new PreviewTransferResult(previewResultResponse.content.previewResult);
+    console.log("Preview created", this);
   }
 }
