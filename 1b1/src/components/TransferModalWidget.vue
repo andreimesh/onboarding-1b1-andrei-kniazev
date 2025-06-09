@@ -3,7 +3,7 @@ import { ref, computed, } from 'vue'
 import { useLinksState } from '../state/link-state'
 import { getSupportedNetworks } from '../mesh-api/get-supported-networks'
 import { clearStoredPayloadForAll } from "../state/secret-store";
-import { configureTransfer } from '@/mesh-api/configure-transfer';
+import { configureTransfer } from '@/mesh-api/transfer/configure-transfer';
 import { getAuthToken, getBrokerType } from '../state/secret-store';
 import { linkedEntities, LinkedEntity } from '../entities/LinkedEntity';
 import { TransferEntity } from '../entities/TransferEntity';

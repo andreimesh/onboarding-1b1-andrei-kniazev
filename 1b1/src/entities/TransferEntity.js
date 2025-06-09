@@ -1,10 +1,9 @@
-import { configureTransfer } from "../mesh-api/configure-transfer";
+import { configureTransfer } from "../mesh-api/transfer/configure-transfer";
 import { previewTransfer } from "../mesh-api/preview-transfer";
 import { LinkedEntity } from "./LinkedEntity";
 import { NetworkModel } from '../models/NetworkModel';
 
 export class TransferEntity {
-
 
   /**
    * @type {NetworkModel|null}

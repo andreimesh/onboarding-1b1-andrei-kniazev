@@ -1,4 +1,4 @@
-import { secret, baseUrl } from "./secret"
+import { secret, baseUrl } from "../secret"
 
 
 
