@@ -1,22 +1,30 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, } from 'vue'
 import { useLinksState } from '../state/link-state'
 import { getSupportedNetworks } from '../mesh-api/get-supported-networks'
 import { clearStoredPayloadForAll } from "../state/secret-store";
 import { configureTransfer } from '@/mesh-api/configure-transfer';
 import { getAuthToken, getBrokerType } from '../state/secret-store';
+import { linkedEntities, LinkedEntity } from '../entities/LinkedEntity';
+
+const props = defineProps({
+  entities: {
+    required: true,
+    type: Array
+  }
+})
+
 
 const showModal = ref(false)
 
 const { isConnected, links } = useLinksState();
 
 const isBothConnected = computed(() => {
-  return isConnected("linkA") && isConnected("linkB");
+  return props.entities.every(entity => entity.isConnected);
 });
 
 
 const networks = ref([]);
-
 // Not needed anymore, but keeping for reference
 // getSupportedNetworks().then(fetchedNetworks => {
 //   networks.value = fetchedNetworks.content.networks;
@@ -24,27 +32,37 @@ const networks = ref([]);
 // });
 
 /**
- * @param {'linkA'|'linkB'} fromKey 
- * @param {'linkA'|'linkB'} toKey
+ * @param {LinkedEntity} fromEntity
+ * @param {LinkedEntity} toEntity
  */
-async function transferMoney(fromKey, toKey) {
+async function transferMoney(fromEntity, toEntity) {
+  await fromEntity.getRefreshedToken();
+  await toEntity.getRefreshedToken();
+
   const to = {
-    brokerType: getBrokerType(toKey),
-    authToken: getAuthToken(toKey),
+    brokerType: toEntity.brokerType,
+    authToken: toEntity.authToken,
   }
   const from = {
-    brokerType: getBrokerType(fromKey),
-    authToken: getAuthToken(fromKey),
+    brokerType: fromEntity.brokerType,
+    authToken: fromEntity.authToken,
   }
 
   await configureTransfer(from, to);
 }
 
+function showModalTrue() {
+  showModal.value = true;
+  console.log(props.entities)
+}
+
+
+
 </script>
 
 <template>
   <div class="modal-actions">
-    <button @click="showModal = true">Transfer Money</button>
+    <button @click="showModalTrue()">Transfer Money</button>
 
     <div v-if="showModal" class="modal-overlay" @click.self="showModal = false">
       <div class="modal-content">
@@ -56,12 +74,12 @@ async function transferMoney(fromKey, toKey) {
           <div class="content">
             <h2>Transfer Money</h2>
             <div>
-              <button class="transfer-button" @click="transferMoney('linkA', 'linkB')">
-                Transfer 5$: {{ links.linkA.brokerType }} to {{ links.linkB.brokerType }}</button>
+              <button class="transfer-button" @click="transferMoney(entities[0], entities[1])">
+                Transfer 5$: {{ entities[0].brokerName }} to {{ entities[1].brokerName }}</button>
             </div>
             <div>
-              <button class="transfer-button" @click="transferMoney('linkB', 'linkA')">
-                Transfer 5$: {{ links.linkB.brokerType }} to {{ links.linkA.brokerType }}</button>
+              <button class="transfer-button" @click="transferMoney(entities[1], entities[0])">
+                Transfer 5$: {{ entities[1].brokerName }} to {{ entities[0].brokerName }}</button>
             </div>
             <div>
               <button @click="showModal = false">Close</button>

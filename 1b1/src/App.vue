@@ -7,6 +7,7 @@ import { LinkedEntity, linkedEntities } from './entities/LinkedEntity';
 reset();
 
 
+
 function reset() {
   linkedEntities.values = [];
   for (let i = 0; i < 2; i++) {
@@ -21,10 +22,10 @@ function reset() {
     <button class="reset-btn" @click="reset">Reset</button>
   </div>
   <div class="top-menu">
-    <TransferModalWidget />
+    <TransferModalWidget :entities="linkedEntities" />
   </div>
   <div class="grid">
-    <LinkCard v-for="entity in linkedEntities" :link-key="'linkA'" :index="entity.index" :entity="entity" />
+    <LinkCard v-for="entity in linkedEntities" :entity="entity" />
   </div>
 
 </template>

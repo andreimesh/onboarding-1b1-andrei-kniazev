@@ -4,15 +4,6 @@ import { LinkedEntity } from '../entities/LinkedEntity';
 
 
 const props = defineProps({
-  linkKey: {
-    type: String,
-    required: true,
-    validator: value => ['linkA', 'linkB'].includes(value)
-  },
-  index: {
-    type: Number,
-    required: true
-  },
   entity: {
     type: LinkedEntity,
     required: true,
