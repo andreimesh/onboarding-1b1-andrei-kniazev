@@ -67,7 +67,7 @@ export class LinkedEntity {
     guardAgainstNotConnected(this);
     const refreshedToken = await postRefreshToken(
       this.authToken.refreshToken,
-      this.brokerType.value);
+      this.brokerType);
     console.warn(refreshedToken);
     console.log("Token was refreshed");
   }
@@ -100,7 +100,7 @@ export class LinkedEntity {
  * @param {LinkedEntity} entity
  */
 function guardAgainstNotConnected(entity) {
-  if (entity.isConnected.value === false) {
+  if (entity.isConnected === false) {
     console.error(entity);
     throw new Error("Entity is not connected. Please connect first.");
   }
