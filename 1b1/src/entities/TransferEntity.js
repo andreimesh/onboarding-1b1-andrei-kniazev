@@ -1,5 +1,5 @@
 import { configureTransfer } from "../mesh-api/transfer/configure-transfer";
-import { previewTransfer } from "../mesh-api/preview-transfer";
+import { postPreview } from "../mesh-api/transfer/post-preview";
 import { LinkedEntity } from "./LinkedEntity";
 import { NetworkModel } from '../models/NetworkModel';
 
@@ -9,6 +9,8 @@ export class TransferEntity {
    * @type {NetworkModel|null}
    */
   networkToTransfer = null;
+
+  symbol = "USDC"
 
   /**
    * @param {LinkedEntity} fromEntity
@@ -43,33 +45,19 @@ export class TransferEntity {
     this.networkToTransfer = baseNetwork;
   }
 
-  /**
-   * Preview a transfer with the selected network, symbol, address, and amount.
-   * @param {Object} params
-   * @param {string} params.networkId
-   * @param {string} params.symbol
-   * @param {string} params.toAddress
-   * @param {number} params.amount
-   * @returns {Promise<Object>} API response content
-   */
-  async preview({ networkId, symbol, toAddress, amount }) {
-    this.previewResult = await previewTransfer(
+  async preview() {
+    this.previewResult = await postPreview(
       {
-        brokerType: this.fromType,
-        authToken: this.fromAuthToken,
-        clientId: this.clientId,
-        keySecret: this.keySecret,
-      },
-      {
-        brokerType: this.toType,
-        authToken: this.toAuthToken,
-        networkId,
-        symbol,
-        toAddress,
-        amount,
+        fromAuthToken: this.fromEntity.authToken.accessToken,
+        fromType: this.fromEntity.brokerType,
+        toAuthToken: this.toEntity.authToken.accessToken,
+        toType: this.toEntity.brokerType,
+        networkId: this.networkToTransfer.id,
+        symbol: this.symbol,
+        toAddress: "",
+        amount: "5"
       }
-    );
-
+    )
 
     return this.previewResult;
   }

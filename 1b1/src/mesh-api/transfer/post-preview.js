@@ -11,8 +11,6 @@ import { secret, baseUrl } from "./secret"
  * @param {string} params.symbol
  * @param {string} params.toAddress
  * @param {number} params.amount
- * @param {string} params.clientId
- * @param {string} params.clientSecret
  * @returns {Promise<Object>} API response
  */
 export async function postPreview({
@@ -24,8 +22,6 @@ export async function postPreview({
   symbol,
   toAddress,
   amount,
-  clientId,
-  clientSecret
 }) {
   const response = await fetch(`${baseUrl}/api/v1/transfers/managed/preview`, {
     method: "POST",
