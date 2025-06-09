@@ -30,7 +30,7 @@ const props = defineProps({
 const balance = ref(0);
 const brokerName = ref(props.linkKey);
 
-const { isConnected, connectLink } = useLinksState();
+const { connectLink } = useLinksState();
 
 checkConnectionStatusOnLoad();
 
@@ -42,6 +42,10 @@ async function connect() {
 async function updateBalance() {
   await props.entity.updateBalance();
 }
+
+
+const displayName = computed(() => { return props.entity.brokerName });
+const isConnected = computed(() => { return props.entity.isConnected });
 
 // async function connect() {
 //   try {
@@ -87,13 +91,14 @@ async function checkConnectionStatusOnLoad() {
 }
 
 
+
 </script>
 
 <template>
   <div class="card" v-if="props.entity">
-    <div v-if="props.entity.isConnected" class="connected">
+    <div v-if="isConnected" class="connected">
       <div class="broker-balance-box">
-        <div class="broker-name">{{ props.entity.displayName }}</div>
+        <div class="broker-name">{{ displayName }}</div>
         <div class="balance-label">
           <span class="balance-value">${{ balance.toLocaleString(undefined, {
             minimumFractionDigits: 2,
@@ -110,7 +115,7 @@ async function checkConnectionStatusOnLoad() {
       </div>
     </div>
     <div v-else class="not-connected">
-      <div class="broker-name">{{ props.entity.displayName }}</div>
+      <div class="broker-name">{{ displayName }}</div>
       <div class="status failure">Not connected</div>
       <div>
         <button @click="connect">Connect</button>

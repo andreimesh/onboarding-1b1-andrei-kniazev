@@ -1,4 +1,3 @@
-import { ref, computed } from "vue"
 import { getLinkToken } from '../mesh-api/get-link-token';
 import { createLink } from '@meshconnect/web-link-sdk';
 import { secret } from '../mesh-api/secret';
@@ -12,15 +11,15 @@ export const linkedEntities = ref([]);
 
 
 export class LinkedEntity {
-  isConnected = ref(false);
+  isConnected = false;
 
   authToken = {
     refreshToken: null,
     accessToken: null
   }
 
-  brokerName = ref("");
-  brokerType = ref("");
+  brokerName = null;
+  brokerType = null;
 
 
   /**
@@ -39,11 +38,6 @@ export class LinkedEntity {
     return this.authToken.refreshToken != null;
   }
 
-  get displayName() {
-    const brokerName = this.brokerName.value ?? "";
-    return computed(() => this.index + "# " + brokerName);
-  }
-
   async connect() {
     console.log("LinkedEntity.connect() called for index:", this.index);
     const token = await getLinkToken();
@@ -56,22 +50,24 @@ export class LinkedEntity {
   }
 
   connectThisLink(payload) {
-    this.isConnected = ref(true);
+    this.isConnected = true;
     this.authToken = {
       refreshToken: payload.accessToken.accountTokens[0].refreshToken,
       accessToken: payload.accessToken.accountTokens[0].accessToken
     };
-    this.brokerName = ref(payload.accessToken.brokerName);
-    this.brokerType = ref(payload.accessToken.brokerType);
+    this.brokerName = payload.accessToken.brokerName;
+    this.brokerType = payload.accessToken.brokerType;
 
     console.log("LinkedEntity index:", this.index, "is connected");
     console.log(this);
   }
 
   async getRefreshedToken() {
-    console.log("LinkedEntity.getRefreshedToken() called for index:", this.index);
+    console.log("LinkedEntity.getRefreshedToken() called for:", this);
     guardAgainstNotConnected(this);
-    const refreshedToken = postRefreshToken(this.authToken.refreshToken, this.brokerType.value);
+    const refreshedToken = await postRefreshToken(
+      this.authToken.refreshToken,
+      this.brokerType.value);
     console.warn(refreshedToken);
     console.log("Token was refreshed");
   }
@@ -104,7 +100,8 @@ export class LinkedEntity {
  * @param {LinkedEntity} entity
  */
 function guardAgainstNotConnected(entity) {
-  if (!entity.isConnected.value) {
+  if (entity.isConnected.value === false) {
+    console.error(entity);
     throw new Error("Entity is not connected. Please connect first.");
   }
 }

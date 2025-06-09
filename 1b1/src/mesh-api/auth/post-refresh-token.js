@@ -2,6 +2,13 @@ import { secret, baseUrl } from "../secret"
 
 
 export async function postRefreshToken(refreshToken, brokerType) {
+  if (!refreshToken) {
+    throw new Error("Refresh token is required to refresh the access token.");
+  }
+  if (!brokerType) {
+    throw new Error("Broker type is required to refresh the access token.");
+  }
+
   const options = {
     method: 'POST',
     headers: {
