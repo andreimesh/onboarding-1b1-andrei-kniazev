@@ -1,4 +1,4 @@
-import { secret, baseUrl } from "./secret"
+import { secret, baseUrl } from "../secret"
 
 /**
  * Calls the Mesh API to preview a managed transfer.
@@ -23,7 +23,7 @@ export async function postPreview({
   toAddress,
   amount,
 }) {
-  const response = await fetch(`${baseUrl}/api/v1/transfers/managed/preview`, {
+  const response = await fetch(`${baseUrl()}/api/v1/transfers/managed/preview`, {
     method: "POST",
     headers: {
       'X-Client-Secret': secret().keySecret,
@@ -41,10 +41,6 @@ export async function postPreview({
       amount
     })
   });
-
-  if (!response.ok) {
-    throw new Error(`Preview transfer failed: ${response.statusText}`);
-  }
 
   return await response.json();
 }

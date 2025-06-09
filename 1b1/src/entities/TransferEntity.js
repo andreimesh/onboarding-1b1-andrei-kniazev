@@ -46,6 +46,7 @@ export class TransferEntity {
   }
 
   async preview() {
+    console.log("Preview transfer from", this.fromEntity, "to", this.toEntity);
     this.previewResult = await postPreview(
       {
         fromAuthToken: this.fromEntity.authToken.accessToken,
@@ -59,6 +60,6 @@ export class TransferEntity {
       }
     )
 
-    return this.previewResult;
+    console.log("Preview", this.previewResult);
   }
 }

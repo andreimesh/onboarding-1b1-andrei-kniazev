@@ -44,6 +44,7 @@ let transferEntity = null;
 async function transferMoney(fromEntity, toEntity) {
   transferEntity = new TransferEntity(fromEntity, toEntity);
   await transferEntity.configure();
+  await transferEntity.preview();
 }
 
 function showModalTrue() {
@@ -71,6 +72,7 @@ function showModalTrue() {
             <div>
               <button class="transfer-button" @click="transferMoney(entities[0], entities[1])">
                 Transfer 5 USDC: {{ entities[0].brokerName }} to {{ entities[1].brokerName }}</button>
+
             </div>
             <div>
               <button class="transfer-button" @click="transferMoney(entities[1], entities[0])">
