@@ -79,7 +79,9 @@ function showModalTrue() {
             </div>
             <div>
               <button class="transfer-button" @click="transferMoney(entities[1], entities[0])">
-                Transfer 5 USDC: {{ entities[1].brokerName }} to {{ entities[0].brokerName }}</button>
+                <!-- https://docs.meshconnect.com/guides/link-initialization#transferring-for-a-specific-amount -->
+                (USE UI MESH SDK!) Transfer 5 USDC: {{ entities[1].brokerName }} to {{ entities[0].brokerName
+                }}</button>
             </div>
             <div>
               <button @click="showModal = false">Close</button>

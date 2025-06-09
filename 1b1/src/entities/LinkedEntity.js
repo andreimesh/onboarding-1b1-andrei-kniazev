@@ -3,6 +3,7 @@ import { createLink } from '@meshconnect/web-link-sdk';
 import { secret } from '../mesh-api/secret';
 import { postBalanceGet } from '../mesh-api/balance/post-balance-get';
 import { postRefreshToken } from '../mesh-api/auth/post-refresh-token';
+import { postHoldingsGet } from '../mesh-api/holdings/post-holdings-get'
 import { ref } from 'vue';
 
 /**
@@ -28,6 +29,8 @@ export class LinkedEntity {
     cash: 0,
     currencyCode: "USD"
   }
+
+  cryptocurrencyPositions = [];
 
   /**
    * @param {number} index 
@@ -99,6 +102,15 @@ export class LinkedEntity {
     };
     console.log("New balance:", balance);
     console.log("Balance updated for:", this);
+  }
+
+  async updateHoldings() {
+    guardAgainstNotConnected(this);
+    await this.getRefreshedToken();
+    const holdings = await postHoldingsGet(this.authToken.accessToken, this.brokerType)
+    this.holdings = holdings;
+    console.log("New holdings:", holdings);
+    console.log("Holdings updated for:", this);
   }
 
   /**

@@ -18,6 +18,10 @@ async function updateBalance() {
   await props.entity.updateBalance();
 }
 
+async function updateHoldings() {
+  await props.entity.updateHoldings();
+}
+
 const displayName = computed(() => { return props.entity.brokerName });
 const isConnected = computed(() => { return props.entity.isConnected });
 const cash = computed(() => { return props.entity.balance.cash });
@@ -45,6 +49,9 @@ const currency = computed(() => { return props.entity.balance.currency });
       </div>
       <div class="connected-content">
         <button @click="updateBalance">Update Balance</button>
+      </div>
+      <div class="connected-content">
+        <button @click="updateHoldings">Update Holdings</button>
       </div>
     </div>
     <div v-else class="not-connected">
