@@ -1,11 +1,5 @@
 <script setup>
 import { defineProps, ref, computed } from 'vue'
-import { useLinksState } from '../state/link-state';
-import { createLink } from '@meshconnect/web-link-sdk';
-import { getLinkToken } from '../mesh-api/get-link-token';
-import { getBalance } from '../mesh-api/get-balance';
-import { secret } from '../mesh-api/secret';
-import { storeOnIntegrationsPayload, getStoredPayload, tryGetStoredPayload, getAuthToken } from '../state/secret-store';
 import { LinkedEntity } from '../entities/LinkedEntity';
 
 
@@ -25,16 +19,6 @@ const props = defineProps({
   }
 })
 
-
-
-const balance = ref(0);
-const brokerName = ref(props.linkKey);
-
-const { connectLink } = useLinksState();
-
-checkConnectionStatusOnLoad();
-
-
 async function connect() {
   await props.entity.connect();
 }
@@ -43,52 +27,10 @@ async function updateBalance() {
   await props.entity.updateBalance();
 }
 
-
 const displayName = computed(() => { return props.entity.brokerName });
 const isConnected = computed(() => { return props.entity.isConnected });
-
-// async function connect() {
-//   try {
-//     const token = await getLinkToken();
-//     const meshLink =
-//       createLink({
-//         clientId: secret().clientId,
-//         onIntegrationConnected: (payload) => { connectThisLinkCard(payload) },
-//       })
-//     meshLink.openLink(token.content.linkToken)
-//   }
-//   catch (e) {
-//     console.error(e)
-//   }
-// }
-
-async function connectThisLinkCard(payload) {
-  storeOnIntegrationsPayload(payload, props.linkKey);
-  connectLink(props.linkKey);
-  await getBalanceForThisLinkCard();
-}
-
-async function getBalanceForThisLinkCard() {
-  try {
-    const balanceObject = await getBalance(props.linkKey);
-    balance.value = balanceObject.balances[0].cash;
-    const storedPayload = getStoredPayload(props.linkKey);
-    brokerName.value = storedPayload.brokerName;
-  }
-  catch (e) {
-    console.error(e)
-  }
-}
-
-async function checkConnectionStatusOnLoad() {
-  const payload = tryGetStoredPayload(props.linkKey);
-  if (payload) {
-    connectLink(props.linkKey, payload.brokerName);
-    await getBalanceForThisLinkCard();
-  } else {
-    console.log(`Link Card is not connected for ${props.linkKey}`);
-  }
-}
+const cash = computed(() => { return props.entity.balance.cash });
+const currency = computed(() => { return props.entity.balance.currency });
 
 
 
@@ -100,11 +42,11 @@ async function checkConnectionStatusOnLoad() {
       <div class="broker-balance-box">
         <div class="broker-name">{{ displayName }}</div>
         <div class="balance-label">
-          <span class="balance-value">${{ balance.toLocaleString(undefined, {
+          <span class="balance-value">${{ cash.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
           }) }}</span>
-          <span class="currency">USD</span>
+          <span class="currency">{{ currency }}</span>
         </div>
       </div>
       <div class="connected-content">

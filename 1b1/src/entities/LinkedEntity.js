@@ -23,6 +23,12 @@ export class LinkedEntity {
   brokerType = null;
 
 
+  balance = {
+    buyingPower: 0,
+    cash: 0,
+    currencyCode: "USD"
+  }
+
   /**
    * @param {number} index 
    */
@@ -86,7 +92,12 @@ export class LinkedEntity {
     guardAgainstNotConnected(this);
     await this.getRefreshedToken();
     const balance = await postBalanceGet(this.authToken.accessToken, this.brokerType)
-    console.log("Balance updated for index:", this.index, "Balance:", balance);
+    this.balance = {
+      buyingPower: balance.balances[0].buyingPower,
+      cash: balance.balances[0].cash,
+      currencyCode: balance.balances[0].currencyCode
+    };
+    console.log("Balance updated for:", this);
   }
 
   /**
