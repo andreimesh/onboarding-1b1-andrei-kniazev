@@ -5,6 +5,7 @@ import { postBalanceGet } from '../mesh-api/balance/post-balance-get';
 import { postRefreshToken } from '../mesh-api/auth/post-refresh-token';
 import { postHoldingsGet } from '../mesh-api/holdings/post-holdings-get'
 import { ref } from 'vue';
+import { CryptocurrencyPosition } from '../models/CryptocurrencyPosition';
 
 /**
 * @type {Array<LinkedEntity>}
@@ -30,6 +31,9 @@ export class LinkedEntity {
     currencyCode: "USD"
   }
 
+  /**
+   * @type {Array<CryptocurrencyPosition>}
+   */
   cryptocurrencyPositions = [];
 
   /**
@@ -111,6 +115,13 @@ export class LinkedEntity {
     this.holdings = holdings;
     console.log("New holdings:", holdings);
     console.log("Holdings updated for:", this);
+    for (const holding of holdings.cryptocurrencyPositions) {
+      this.cryptocurrencyPositions.push(new CryptocurrencyPosition(
+        holding.name,
+        holding.symbol,
+        holding.amount
+      ));
+    }
   }
 
   /**

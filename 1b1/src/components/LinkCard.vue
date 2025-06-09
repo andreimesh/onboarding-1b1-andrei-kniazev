@@ -26,7 +26,7 @@ const displayName = computed(() => { return props.entity.brokerName });
 const isConnected = computed(() => { return props.entity.isConnected });
 const cash = computed(() => { return props.entity.balance.cash });
 const currency = computed(() => { return props.entity.balance.currency });
-
+const positions = computed(() => { return props.entity.cryptocurrencyPositions });
 
 
 </script>
@@ -42,6 +42,17 @@ const currency = computed(() => { return props.entity.balance.currency });
             maximumFractionDigits: 2
           }) }}</span>
           <span class="currency">{{ currency }}</span>
+        </div>
+        <div class="cryptocurrency-holdings">
+          <div class="holdings-list">
+            <div v-for="position in positions" :key="position.symbol" class="holding-card">
+              <div class="holding-info">
+                <span class="token-name">{{ position.name }}</span>
+                <span class="token-symbol">({{ position.symbol }})</span>
+              </div>
+              <div class="token-amount">{{ position.amount }}</div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="connected-content">
@@ -162,5 +173,52 @@ const currency = computed(() => { return props.entity.balance.currency });
 
 .card button:hover {
   background: #305d8a;
+}
+
+.holdings-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.holding-card {
+  background: #f7fafd;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(64, 120, 192, 0.07);
+  padding: 12px 18px;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.holding-info {
+  font-size: 1em;
+  font-weight: 500;
+  color: #305d8a;
+  margin-bottom: 4px;
+}
+
+.token-name {
+  margin-right: 4px;
+}
+
+.token-symbol {
+  color: #888;
+  font-size: 0.95em;
+}
+
+.token-amount {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #222;
+}
+
+.token-icon {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 6px;
 }
 </style>
