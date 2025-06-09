@@ -6,6 +6,7 @@ import { clearStoredPayloadForAll } from "../state/secret-store";
 import { configureTransfer } from '@/mesh-api/configure-transfer';
 import { getAuthToken, getBrokerType } from '../state/secret-store';
 import { linkedEntities, LinkedEntity } from '../entities/LinkedEntity';
+import { TransferEntity } from '../entities/TransferEntity';
 
 const props = defineProps({
   entities: {
@@ -17,7 +18,6 @@ const props = defineProps({
 
 const showModal = ref(false)
 
-const { isConnected, links } = useLinksState();
 
 const isBothConnected = computed(() => {
   return props.entities.every(entity => entity.isConnected);
@@ -31,24 +31,19 @@ const networks = ref([]);
 //   console.log(JSON.stringify(networks.value));
 // });
 
+
+/**
+ * @type {TransferEntity|null}
+ */
+let transferEntity = null;
+
 /**
  * @param {LinkedEntity} fromEntity
  * @param {LinkedEntity} toEntity
  */
 async function transferMoney(fromEntity, toEntity) {
-  await fromEntity.getRefreshedToken();
-  await toEntity.getRefreshedToken();
-
-  const to = {
-    brokerType: toEntity.brokerType,
-    authToken: toEntity.authToken.accessToken,
-  }
-  const from = {
-    brokerType: fromEntity.brokerType,
-    authToken: fromEntity.authToken.accessToken,
-  }
-
-  await configureTransfer(from, to);
+  transferEntity = new TransferEntity(fromEntity, toEntity);
+  await transferEntity.configure();
 }
 
 function showModalTrue() {
