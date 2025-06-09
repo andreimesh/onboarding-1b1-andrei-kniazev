@@ -41,11 +41,11 @@ async function transferMoney(fromEntity, toEntity) {
 
   const to = {
     brokerType: toEntity.brokerType,
-    authToken: toEntity.authToken,
+    authToken: toEntity.authToken.accessToken,
   }
   const from = {
     brokerType: fromEntity.brokerType,
-    authToken: fromEntity.authToken,
+    authToken: fromEntity.authToken.accessToken,
   }
 
   await configureTransfer(from, to);

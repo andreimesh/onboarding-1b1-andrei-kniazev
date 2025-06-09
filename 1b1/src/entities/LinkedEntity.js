@@ -97,6 +97,7 @@ export class LinkedEntity {
       cash: balance.balances[0].cash,
       currencyCode: balance.balances[0].currencyCode
     };
+    console.log("New balance:", balance);
     console.log("Balance updated for:", this);
   }
 
