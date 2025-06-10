@@ -1,70 +1,88 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { useLinksState } from '../state/link-state'
 import { getSupportedNetworks } from '../mesh-api/get-supported-networks'
 import { clearStoredPayloadForAll } from "../state/secret-store";
-import { configureTransfer } from '@/mesh-api/configure-transfer';
+import { configureTransfer } from '@/mesh-api/transfer/configure-transfer';
 import { getAuthToken, getBrokerType } from '../state/secret-store';
+import { linkedEntities, LinkedEntity } from '../entities/LinkedEntity';
+import { TransferEntity } from '../entities/TransferEntity';
+import PreviewTransfer from "./PreviewTransfer.vue";
+
+const props = defineProps({
+  entities: {
+    required: true,
+    type: Array
+  }
+})
+
 
 const showModal = ref(false)
 
-const { isConnected, links } = useLinksState();
 
 const isBothConnected = computed(() => {
-  return isConnected("linkA") && isConnected("linkB");
+  return props.entities.every(entity => entity.isConnected);
 });
 
 
 const networks = ref([]);
-
 // Not needed anymore, but keeping for reference
 // getSupportedNetworks().then(fetchedNetworks => {
 //   networks.value = fetchedNetworks.content.networks;
 //   console.log(JSON.stringify(networks.value));
 // });
 
+
 /**
- * @param {'linkA'|'linkB'} fromKey 
- * @param {'linkA'|'linkB'} toKey
+ * @type {TransferEntity|null}
  */
-async function transferMoney(fromKey, toKey) {
-  const to = {
-    brokerType: getBrokerType(toKey),
-    authToken: getAuthToken(toKey),
-  }
-  const from = {
-    brokerType: getBrokerType(fromKey),
-    authToken: getAuthToken(fromKey),
-  }
+let transferEntity = null
+let previewResult = ref(null);
 
-  await configureTransfer(from, to);
+/**
+ * @param {LinkedEntity} fromEntity
+ * @param {LinkedEntity} toEntity
+ */
+async function transferMoney(fromEntity, toEntity) {
+  transferEntity = new TransferEntity(fromEntity, toEntity);
+  await transferEntity.configure();
+  await transferEntity.preview();
+  previewResult = ref(transferEntity.previewResult);
 }
 
-function resetAll() {
-  clearStoredPayloadForAll();
+function showModalTrue() {
+  showModal.value = true;
+  console.log(props.entities)
 }
+
+
+
 </script>
 
 <template>
   <div class="modal-actions">
-    <button @click="showModal = true">Transfer Money</button>
-    <button @click="resetAll()">Reset All</button>
+    <button @click="showModalTrue()">Transfer</button>
+
     <div v-if="showModal" class="modal-overlay" @click.self="showModal = false">
       <div class="modal-content">
         <div v-if="!isBothConnected" class="error-message">
-          <p>Error! Please connect both links to transfer money.</p>
+          <p>Error! Please connect both links to transfer.</p>
           <button @click="showModal = false">Close</button>
         </div>
         <div v-else>
           <div class="content">
-            <h2>Transfer Money</h2>
+            <h2>Transfer</h2>
             <div>
-              <button class="transfer-button" @click="transferMoney('linkA', 'linkB')">
-                Transfer 5$: {{ links.linkA.brokerType }} to {{ links.linkB.brokerType }}</button>
+              <button class="transfer-button" @click="transferMoney(entities[0], entities[1])">
+                Transfer 5 USDC: {{ entities[0].brokerName }} to {{ entities[1].brokerName }}</button>
             </div>
+            <PreviewTransfer v-if="previewResult" :preview="previewResult" />
+
             <div>
-              <button class="transfer-button" @click="transferMoney('linkB', 'linkA')">
-                Transfer 5$: {{ links.linkB.brokerType }} to {{ links.linkA.brokerType }}</button>
+              <button class="transfer-button" @click="transferMoney(entities[1], entities[0])">
+                <!-- https://docs.meshconnect.com/guides/link-initialization#transferring-for-a-specific-amount -->
+                (USE UI MESH SDK!) Transfer 5 USDC: {{ entities[1].brokerName }} to {{ entities[0].brokerName
+                }}</button>
             </div>
             <div>
               <button @click="showModal = false">Close</button>

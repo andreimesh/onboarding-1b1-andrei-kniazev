@@ -1,99 +1,72 @@
 <script setup>
 import { defineProps, ref, computed } from 'vue'
-import { useLinksState } from '../state/link-state';
-import { createLink } from '@meshconnect/web-link-sdk';
-import { getLinkToken } from '../mesh-api/get-link-token';
-import { getBalance } from '../mesh-api/get-balance';
-import { secret } from '../mesh-api/secret';
-import { storeOnIntegrationsPayload, getStoredPayload, tryGetStoredPayload, getAuthToken } from '../state/secret-store';
+import { LinkedEntity } from '../entities/LinkedEntity';
+
 
 const props = defineProps({
-  linkKey: {
-    type: String,
+  entity: {
+    type: LinkedEntity,
     required: true,
-    validator: value => ['linkA', 'linkB'].includes(value)
-  },
-  index: {
-    type: Number,
-    required: true
   }
 })
 
-
-const balance = ref(0);
-const brokerName = ref(props.linkKey);
-
-const { isConnected, connectLink } = useLinksState();
-
-checkConnectionStatusOnLoad();
-
-const connectedStatusForThisLink = isConnected(props.linkKey);
-
 async function connect() {
-  try {
-    const token = await getLinkToken();
-    const meshLink =
-      createLink({
-        clientId: secret().clientId,
-        onIntegrationConnected: (payload) => { connectThisLinkCard(payload) },
-      })
-    meshLink.openLink(token.content.linkToken)
-  }
-  catch (e) {
-    console.error(e)
-  }
+  await props.entity.connect();
 }
 
-async function connectThisLinkCard(payload) {
-  storeOnIntegrationsPayload(payload, props.linkKey);
-  connectLink(props.linkKey);
-  await getBalanceForThisLinkCard();
+async function updateBalance() {
+  await props.entity.updateBalance();
 }
 
-async function getBalanceForThisLinkCard() {
-  try {
-    const balanceObject = await getBalance(props.linkKey);
-    balance.value = balanceObject.balances[0].cash;
-    const storedPayload = getStoredPayload(props.linkKey);
-    brokerName.value = storedPayload.brokerName;
-  }
-  catch (e) {
-    console.error(e)
-  }
+async function updateHoldings() {
+  await props.entity.updateHoldings();
 }
 
-async function checkConnectionStatusOnLoad() {
-  const payload = tryGetStoredPayload(props.linkKey);
-  if (payload) {
-    connectLink(props.linkKey, payload.brokerName);
-    await getBalanceForThisLinkCard();
-  } else {
-    console.log(`Link Card is not connected for ${props.linkKey}`);
-  }
-}
+const displayName = computed(() => { return props.entity.brokerName });
+const isConnected = computed(() => { return props.entity.isConnected });
+const cash = computed(() => { return props.entity.balance.cash });
+const currency = computed(() => { return props.entity.balance.currency });
+const positions = computed(() => { return props.entity.cryptocurrencyPositions });
 
 
 </script>
 
 <template>
-  <div class="card">
-    <div v-if="connectedStatusForThisLink" class="connected">
+  <div class="card" v-if="props.entity">
+    <div v-if="isConnected" class="connected">
       <div class="broker-balance-box">
-        <div class="broker-name">{{ brokerName }}</div>
+        <div class="broker-name">{{ displayName }}</div>
         <div class="balance-label">
-          <span class="balance-value">${{ balance.toLocaleString(undefined, {
+          <span class="balance-value">${{ cash.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
           }) }}</span>
-          <span class="currency">USD</span>
+          <span class="currency">{{ currency }}</span>
+        </div>
+        <div class="cryptocurrency-holdings">
+          <div class="holdings-list">
+            <div v-for="position in positions" :key="position.symbol" class="holding-card">
+              <div class="holding-info">
+                <span class="token-name">{{ position.name }}</span>
+                <span class="token-symbol">({{ position.symbol }})</span>
+              </div>
+              <div class="token-amount">{{ position.amount }}</div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="connected-content">
         <div class="status success">Connected!</div>
       </div>
+      <div class="connected-content">
+        <button @click="updateBalance">Update Balance</button>
+      </div>
+      <div class="connected-content">
+        <button @click="updateHoldings">Update Holdings</button>
+      </div>
     </div>
     <div v-else class="not-connected">
-      <div class="broker-name">{{ brokerName }}</div>
+      <div class="broker-name">{{ displayName }}</div>
       <div class="status failure">Not connected</div>
       <div>
         <button @click="connect">Connect</button>
@@ -200,5 +173,52 @@ async function checkConnectionStatusOnLoad() {
 
 .card button:hover {
   background: #305d8a;
+}
+
+.holdings-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.holding-card {
+  background: #f7fafd;
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(64, 120, 192, 0.07);
+  padding: 12px 18px;
+  min-width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.holding-info {
+  font-size: 1em;
+  font-weight: 500;
+  color: #305d8a;
+  margin-bottom: 4px;
+}
+
+.token-name {
+  margin-right: 4px;
+}
+
+.token-symbol {
+  color: #888;
+  font-size: 0.95em;
+}
+
+.token-amount {
+  font-size: 1.1em;
+  font-weight: 700;
+  color: #222;
+}
+
+.token-icon {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 6px;
 }
 </style>
